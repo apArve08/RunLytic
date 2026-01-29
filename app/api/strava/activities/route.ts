@@ -1,4 +1,4 @@
-// app/api/strava/activities/route.ts
+// app/api/strava/activities/route.ts (UPDATE the GET method)
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 
@@ -13,22 +13,26 @@ async function refreshAccessToken(refreshToken: string) {
       grant_type: 'refresh_token',
     }),
   })
+
   if (!response.ok) {
     throw new Error('Failed to refresh token')
   }
+
   return await response.json()
 }
 
 export async function GET(request: Request) {
   try {
     const supabase = await createClient()
-    const { data: { user } } = await supabase.auth.getUser()
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
 
     if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    // 1. Get Strava connection
+    // Get Strava connection
     const { data: connection, error: connError } = await supabase
       .from('strava_connections')
       .select('*')
@@ -36,18 +40,23 @@ export async function GET(request: Request) {
       .single()
 
     if (connError || !connection) {
-      return NextResponse.json({ error: 'Strava not connected' }, { status: 400 })
+      return NextResponse.json(
+        { error: 'Strava not connected' },
+        { status: 400 }
+      )
     }
 
+    // Check if token expired
     let accessToken = connection.access_token
     const expiresAt = new Date(connection.expires_at)
     
-    // 2. Refresh Token Logic
     if (expiresAt < new Date()) {
-      console.log('DEBUG: Token expired, refreshing...')
+      console.log('Token expired, refreshing...')
       const tokenData = await refreshAccessToken(connection.refresh_token)
+      
       accessToken = tokenData.access_token
       
+      // Update tokens in database
       await supabase
         .from('strava_connections')
         .update({
@@ -58,53 +67,51 @@ export async function GET(request: Request) {
         .eq('user_id', user.id)
     }
 
-    // 3. Fetch from Strava
+    // Fetch activities from Strava
     const { searchParams } = new URL(request.url)
     const page = searchParams.get('page') || '1'
-    const perPage = searchParams.get('per_page') || '3'
+    const perPage = searchParams.get('per_page') || '30'
 
     const activitiesResponse = await fetch(
       `https://www.strava.com/api/v3/athlete/activities?page=${page}&per_page=${perPage}`,
       {
-        headers: { Authorization: `Bearer ${accessToken}` },
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
       }
     )
 
-    const rawActivities = await activitiesResponse.json()
-
-    // ==========================================
-    // DEEP DEBUG LOGGING - Check your Terminal!
-    // ==========================================
-    console.log('--- START STRAVA DEBUG ---')
-    console.log('Status Code:', activitiesResponse.status)
-    console.log('Total Raw Items Received:', Array.isArray(rawActivities) ? rawActivities.length : 'NOT AN ARRAY')
-    
-    if (Array.isArray(rawActivities) && rawActivities.length > 0) {
-      const typesFound = [...new Set(rawActivities.map(a => a.type))]
-      console.log('Activity Types found in your account:', typesFound)
-      console.log('First Item Snippet:', {
-        name: rawActivities[0].name,
-        type: rawActivities[0].type,
-        visibility: rawActivities[0].visibility
-      })
-    } else {
-      console.log('Response body:', rawActivities)
-    }
-    console.log('--- END STRAVA DEBUG ---')
-    // ==========================================
-
     if (!activitiesResponse.ok) {
-      throw new Error(`Strava API Error: ${rawActivities.message || 'Unknown'}`)
+      throw new Error('Failed to fetch activities from Strava')
     }
 
-    // 4. Filter for runs
-    // Note: If you have no runs, this makes the array empty!
-    const runs = rawActivities.filter(
-      (activity: any) => activity.type === 'Run' || activity.type === 'VirtualRun'
-    )
+    const activities = await activitiesResponse.json()
 
-    console.log(`DEBUG: Filtered ${rawActivities.length} total items down to ${runs.length} Runs.`)
+    // Filter for runs only and fetch detailed data with polyline
+    const runs = []
+    for (const activity of activities) {
+      if (activity.type === 'Run' || activity.type === 'VirtualRun') {
+        // Fetch detailed activity to get full polyline
+        const detailResponse = await fetch(
+          `https://www.strava.com/api/v3/activities/${activity.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        )
 
+        if (detailResponse.ok) {
+          const detailedActivity = await detailResponse.json()
+          runs.push(detailedActivity)
+        } else {
+          // Fallback to summary data if detail fetch fails
+          runs.push(activity)
+        }
+      }
+    }
+
+    // Update last sync time
     await supabase
       .from('strava_connections')
       .update({ last_sync_at: new Date().toISOString() })
@@ -113,11 +120,9 @@ export async function GET(request: Request) {
     return NextResponse.json({
       activities: runs,
       total: runs.length,
-      debug_raw_count: rawActivities.length // Useful for frontend debugging
     })
-
   } catch (error: any) {
-    console.error('CRITICAL API ERROR:', error)
+    console.error('Error fetching Strava activities:', error)
     return NextResponse.json(
       { error: error.message || 'Failed to fetch activities' },
       { status: 500 }

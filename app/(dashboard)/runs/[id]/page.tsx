@@ -4,10 +4,12 @@
 import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { ChevronLeft, Calendar, Clock, TrendingUp, Footprints, Sparkles, Trash2, RefreshCw } from 'lucide-react'
+import { ChevronLeft, Calendar, Clock, TrendingUp, Footprints, Sparkles, Trash2, RefreshCw, Mountain, Heart, Zap, Map, Activity } from 'lucide-react'
 import { formatPace, formatDuration, formatDistance } from '@/lib/utils'
 import { format } from 'date-fns'
 import { Run } from '@/types/database'
+import { RouteMap } from '@/components/maps/RouteMap'
+import { ElevationProfile } from '@/components/maps/ElevationProfile'
 
 export default function RunDetailPage() {
   const params = useParams()
@@ -112,7 +114,7 @@ export default function RunDetailPage() {
         Back to runs
       </Link>
 
-      {/* Header */}
+      {/* Header & Primary Stats */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
         <div className="flex justify-between items-start mb-6">
           <div>
@@ -133,7 +135,7 @@ export default function RunDetailPage() {
           </button>
         </div>
 
-        {/* Stats Grid */}
+        {/* Primary Stats Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           <div className="bg-gray-50 rounded-lg p-4">
             <div className="flex items-center gap-2 text-gray-600 mb-2">
@@ -169,6 +171,69 @@ export default function RunDetailPage() {
           )}
         </div>
       </div>
+
+      {/* Enhanced Stats */}
+      {(run.avg_heart_rate || run.elevation_gain || run.avg_speed) && (
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">Additional Metrics</h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {run.avg_heart_rate && (
+              <div className="bg-red-50 rounded-lg p-4">
+                <div className="flex items-center gap-2 text-red-600 mb-2">
+                  <Heart className="w-4 h-4" />
+                  <span className="text-sm font-medium">Avg Heart Rate</span>
+                </div>
+                <p className="text-2xl font-bold text-red-700">{run.avg_heart_rate}</p>
+                <p className="text-xs text-red-600 mt-1">bpm</p>
+              </div>
+            )}
+
+            {run.max_heart_rate && (
+              <div className="bg-red-50 rounded-lg p-4">
+                <div className="flex items-center gap-2 text-red-600 mb-2">
+                  <Heart className="w-4 h-4 fill-current" />
+                  <span className="text-sm font-medium">Max Heart Rate</span>
+                </div>
+                <p className="text-2xl font-bold text-red-700">{run.max_heart_rate}</p>
+                <p className="text-xs text-red-600 mt-1">bpm</p>
+              </div>
+            )}
+
+            {run.avg_speed && (
+              <div className="bg-blue-50 rounded-lg p-4">
+                <div className="flex items-center gap-2 text-blue-600 mb-2">
+                  <Zap className="w-4 h-4" />
+                  <span className="text-sm font-medium">Avg Speed</span>
+                </div>
+                <p className="text-2xl font-bold text-blue-700">{run.avg_speed}</p>
+                <p className="text-xs text-blue-600 mt-1">km/h</p>
+              </div>
+            )}
+
+            {run.elevation_gain && (
+              <div className="bg-green-50 rounded-lg p-4">
+                <div className="flex items-center gap-2 text-green-600 mb-2">
+                  <Mountain className="w-4 h-4" />
+                  <span className="text-sm font-medium">Elevation Gain</span>
+                </div>
+                <p className="text-2xl font-bold text-green-700">{run.elevation_gain}</p>
+                <p className="text-xs text-green-600 mt-1">meters</p>
+              </div>
+            )}
+
+            {run.elevation_loss && (
+              <div className="bg-orange-50 rounded-lg p-4">
+                <div className="flex items-center gap-2 text-orange-600 mb-2">
+                  <Mountain className="w-4 h-4 rotate-180" />
+                  <span className="text-sm font-medium">Elevation Loss</span>
+                </div>
+                <p className="text-2xl font-bold text-orange-700">{run.elevation_loss}</p>
+                <p className="text-xs text-orange-600 mt-1">meters</p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Notes */}
       {run.notes && (
@@ -227,6 +292,73 @@ export default function RunDetailPage() {
           </button>
         </div>
       )}
+
+
+    {/* Route & Elevation Section */}
+    {run.route_data && run.route_data.length > 0 && (
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <Map className="w-5 h-5 text-blue-600" />
+            <h2 className="text-lg font-semibold text-gray-900">Route & Terrain</h2>
+          </div>
+          {run.notes?.includes('Imported from Strava') && (
+            <div className="flex items-center gap-2 text-sm text-orange-600 bg-orange-50 px-3 py-1 rounded-full">
+              <Activity className="w-4 h-4" />
+              Strava Activity
+            </div>
+          )}
+        </div>
+        
+        {/* Main Map */}
+        <div className="mb-6">
+          <RouteMap route={run.route_data} height="500px" showMarkers={true} />
+        </div>
+
+        {/* Elevation Profile Insertion */}
+        {run.route_data.some(p => p.elevation) && (
+          <div className="mb-6 border-t pt-6">
+            <div className="flex items-center gap-2 mb-4">
+              <Mountain className="w-4 h-4 text-green-600" />
+              <h3 className="text-sm font-semibold text-gray-700 uppercase tracking-wider">Elevation Profile</h3>
+            </div>
+            <ElevationProfile route={run.route_data} />
+          </div>
+        )}
+        
+        <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+          <div className="bg-gray-50 rounded-lg p-3">
+            <div className="text-gray-600 mb-1">GPS Points</div>
+            <div className="font-semibold text-gray-900">{run.route_data.length}</div>
+          </div>
+          
+          <div className="bg-gray-50 rounded-lg p-3">
+            <div className="text-gray-600 mb-1">Start</div>
+            <div className="font-mono text-xs text-gray-900">
+              {run.route_data[0].lat.toFixed(4)}, {run.route_data[0].lng.toFixed(4)}
+            </div>
+          </div>
+          
+          <div className="bg-gray-50 rounded-lg p-3">
+            <div className="text-gray-600 mb-1">Finish</div>
+            <div className="font-mono text-xs text-gray-900">
+              {run.route_data[run.route_data.length - 1].lat.toFixed(4)},{' '}
+              {run.route_data[run.route_data.length - 1].lng.toFixed(4)}
+            </div>
+          </div>
+          
+          {run.elevation_gain && (
+            <div className="bg-gray-50 rounded-lg p-3">
+              <div className="text-gray-600 mb-1">Total Climb</div>
+              <div className="font-semibold text-gray-900">{run.elevation_gain}m</div>
+            </div>
+          )}
+        </div>
+      </div>
+      
+    )}
+   
     </div>
+    
   )
 }

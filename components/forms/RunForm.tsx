@@ -3,8 +3,10 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Calendar, Clock, Footprints, Save, StickyNote, Heart, TrendingUp, Mountain } from 'lucide-react'
+import { Calendar, Clock, Footprints, Save, StickyNote, Heart, TrendingUp, Mountain, MapPin } from 'lucide-react'
 import { Shoe } from '@/types/database'
+import { GPSTracker } from '../gps/GPSTracker'
+import { RoutePoint } from '@/types/database'
 
 interface RunFormProps {
   shoes: Shoe[]
@@ -15,6 +17,9 @@ export function RunForm({ shoes }: RunFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState('')
   const [showAdvanced, setShowAdvanced] = useState(false)
+  // Add to state
+  const [routeData, setRouteData] = useState<RoutePoint[]>([])
+  const [showGPS, setShowGPS] = useState(false)
 
   const [formData, setFormData] = useState({
     date: new Date().toISOString().split('T')[0],
@@ -54,6 +59,8 @@ export function RunForm({ shoes }: RunFormProps) {
           elevation_gain: formData.elevation_gain ? parseFloat(formData.elevation_gain) : null,
           elevation_loss: formData.elevation_loss ? parseFloat(formData.elevation_loss) : null,
           avg_speed: parseFloat(avgSpeed),
+          route_data: routeData.length > 0 ? routeData : null,
+
         }),
       })
 
@@ -255,7 +262,21 @@ export function RunForm({ shoes }: RunFormProps) {
           </div>
         </div>
       )}
+      {/* GPS Tracking */}
+      <div>
+        <button
+          type="button"
+          onClick={() => setShowGPS(!showGPS)}
+          className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center gap-2"
+        >
+          <MapPin className="w-4 h-4" />
+          {showGPS ? 'Hide' : 'Track'} GPS Route
+        </button>
+      </div>
 
+      {showGPS && (
+        <GPSTracker onRouteUpdate={setRouteData} />
+      )}
       {/* Notes */}
       <div>
         <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">

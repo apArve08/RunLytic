@@ -1,4 +1,9 @@
 @import "tailwindcss";
+@import 'leaflet/dist/leaflet.css';
+
+
+@tailwind utilities;
+
 
 @theme {
   /* This maps your --border variable so @apply border-border works */
