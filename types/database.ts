@@ -200,3 +200,48 @@ export interface RacePrediction {
   confidence: 'low' | 'medium' | 'high'
   basedOn: string
 }
+
+// types/database.ts (ADD to existing file)
+
+export type RecordType = '5K' | '10K' | 'HALF' | 'FULL' | 'LONGEST' | 'FASTEST_PACE'
+
+export interface PersonalRecord {
+  id: string
+  user_id: string
+  record_type: RecordType
+  value: number // seconds for time, km for distance
+  run_id: string | null
+  achieved_at: string
+  previous_record: number | null
+  created_at: string
+  updated_at: string
+}
+
+export interface RunningStreak {
+  id: string
+  user_id: string
+  start_date: string
+  end_date: string | null
+  length: number
+  is_active: boolean
+  created_at: string
+}
+
+export interface WeatherData {
+  temp: number // Celsius
+  feels_like: number
+  conditions: string // "Clear", "Clouds", "Rain"
+  humidity: number // percentage
+  wind_speed: number // m/s
+  icon: string // weather icon code
+}
+
+export type TrainingZone = 'Z1' | 'Z2' | 'Z3' | 'Z4' | 'Z5'
+
+export interface ZoneData {
+  zone: TrainingZone
+  min_hr: number
+  max_hr: number
+  duration: number // seconds in this zone
+  percentage: number
+}
