@@ -2,7 +2,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 
-
+// app/api/runs/route.ts (UPDATE POST method only)
 export async function POST(request: Request) {
   try {
     const supabase = await createClient()
@@ -15,9 +15,14 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json()
-    const { date, distance, duration, shoes_id, notes } = body
+    const { date, distance, duration, shoes_id, notes, avg_heart_rate, max_heart_rate, elevation_gain, elevation_loss, avg_speed, route_data } = body
 
-    console.log('Creating run:', { date, distance, duration, shoes_id }) // Debug log
+    // Fetch weather if we have route data (first GPS point)
+    let weatherData = null
+    if (route_data && route_data.length > 0) {
+      const { fetchWeather } = await import('@/lib/weather')
+      weatherData = await fetchWeather(route_data[0].lat, route_data[0].lng, date)
+    }
 
     // Insert run
     const { data: run, error } = await supabase
@@ -29,6 +34,13 @@ export async function POST(request: Request) {
         duration,
         shoes_id: shoes_id || null,
         notes,
+        avg_heart_rate,
+        max_heart_rate,
+        elevation_gain,
+        elevation_loss,
+        avg_speed,
+        route_data,
+        weather_data: weatherData,
       })
       .select()
       .single()
@@ -45,7 +57,27 @@ export async function POST(request: Request) {
       if (shoeError) console.error('Error updating shoe mileage:', shoeError)
     }
 
-    return NextResponse.json({ run })
+    // Detect personal records
+    const { data: newPRs } = await supabase.rpc('detect_personal_records', {
+      p_user_id: user.id,
+      p_run_id: run.id,
+      p_distance: parseFloat(distance),
+      p_duration: duration,
+      p_pace: run.pace,
+      p_date: date,
+    })
+
+    // Update running streak
+    await supabase.rpc('update_running_streak', {
+      p_user_id: user.id,
+      p_date: date,
+    })
+
+    return NextResponse.json({ 
+      run,
+      newPRs: newPRs || [],
+      hasWeather: !!weatherData,
+    })
   } catch (error) {
     console.error('Error creating run:', error)
     return NextResponse.json({ error: 'Failed to create run' }, { status: 500 })
@@ -146,3 +178,4 @@ export async function DELETE(request: Request) {
     return NextResponse.json({ error: 'Failed to delete run' }, { status: 500 })
   }
 }
+
