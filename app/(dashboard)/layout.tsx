@@ -3,7 +3,8 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { Footprints, Home, Drill, ListChecks, LogOut, Calendar, TrendingUp, CalendarDays} from 'lucide-react'
-import { Settings } from 'lucide-react'
+import { Settings, Trophy, Heart, Cloud, Share2 } from 'lucide-react'
+
 
 export default async function DashboardLayout({
   children,
@@ -81,6 +82,38 @@ export default async function DashboardLayout({
                 <Drill className="w-4 h-4" />
                 Shoes
               </Link>
+
+<Link
+  href="/records"
+  className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition"
+>
+  <Trophy className="w-4 h-4" />
+  Records
+</Link>
+
+<Link
+  href="/zones"
+  className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition"
+>
+  <Heart className="w-4 h-4" />
+  Training Zones
+</Link>
+
+<Link
+  href="/weather"
+  className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition"
+>
+  <Cloud className="w-4 h-4" />
+  Weather
+</Link>
+
+<Link
+  href="/stats-widget"
+  className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition"
+>
+  <Share2 className="w-4 h-4" />
+  Share Stats
+</Link>
               <Link
   href="/settings"
   className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition"

@@ -1,9 +1,7 @@
-// app/(dashboard)/page.tsx (ADD annual stats tab)
-
+// app/(dashboard)/page.tsx
 'use client'
 
-import { useState } from 'react'
-import { createClient } from '@/lib/supabase/client'
+import { useState, useEffect } from 'react'
 import { StatsOverview } from '@/components/dashboard/StatsOverview'
 import { WeeklyChart } from '@/components/dashboard/WeeklyChart'
 import { MonthlyStats } from '@/components/dashboard/MonthlyStats'
@@ -11,17 +9,34 @@ import { AnnualStats } from '@/components/annual/AnnualStats'
 import { RunCard } from '@/components/dashboard/RunCard'
 import { ScheduleWidget } from '@/components/dashboard/ScheduleWidget'
 import { RacePredictor } from '@/components/race/RacePredictor'
+import { StreakBadge } from '@/components/streaks/StreakBadge'
+import { StreakCalendar } from '@/components/streaks/StreakCalendar'
+import { PRCelebration } from '@/components/records/PRCelebration'
 import Link from 'next/link'
-import { Plus } from 'lucide-react'
-import { useEffect } from 'react'
+import { Plus, Trophy } from 'lucide-react'
 
 export default function DashboardPage() {
   const [runs, setRuns] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [timeRange, setTimeRange] = useState<'week' | 'month' | 'year' | 'all'>('all')
+  const [newPRs, setNewPRs] = useState<any[]>([])
+  const [showPRCelebration, setShowPRCelebration] = useState(false)
+  const [streaks, setStreaks] = useState({ currentStreak: 0, longestStreak: 0 })
 
   useEffect(() => {
     fetchRuns()
+    fetchStreaks()
+    
+    // Check for new PRs in localStorage (set after logging a run)
+    const storedPRs = localStorage.getItem('newPRs')
+    if (storedPRs) {
+      const prs = JSON.parse(storedPRs)
+      if (prs.length > 0) {
+        setNewPRs(prs)
+        setShowPRCelebration(true)
+        localStorage.removeItem('newPRs')
+      }
+    }
   }, [])
 
   const fetchRuns = async () => {
@@ -33,6 +48,19 @@ export default function DashboardPage() {
       console.error('Error:', error)
     } finally {
       setLoading(false)
+    }
+  }
+
+  const fetchStreaks = async () => {
+    try {
+      const response = await fetch('/api/streaks')
+      const data = await response.json()
+      setStreaks({
+        currentStreak: data.currentStreak || 0,
+        longestStreak: data.longestStreak || 0,
+      })
+    } catch (error) {
+      console.error('Error fetching streaks:', error)
     }
   }
 
@@ -48,6 +76,11 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-8">
+      {/* PR Celebration Modal */}
+      {showPRCelebration && (
+        <PRCelebration prs={newPRs} onClose={() => setShowPRCelebration(false)} />
+      )}
+
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
@@ -85,6 +118,12 @@ export default function DashboardPage() {
         <AnnualStats />
       ) : (
         <>
+          {/* Running Streaks */}
+          <StreakBadge 
+            currentStreak={streaks.currentStreak} 
+            longestStreak={streaks.longestStreak} 
+          />
+
           {/* Stats Overview */}
           <StatsOverview runs={runs} />
 
@@ -93,6 +132,9 @@ export default function DashboardPage() {
 
           {/* Schedule Widget */}
           <ScheduleWidget />
+
+          {/* Streak Calendar */}
+          <StreakCalendar runs={runs} month={new Date()} />
 
           {/* Charts */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

@@ -12,7 +12,8 @@ export interface Run {
   created_at: string
   updated_at: string
   shoes?: Shoe
-
+  weather_data?: WeatherData
+  personal_records?: PersonalRecord[]
 
   // New fields
   avg_heart_rate: number | null

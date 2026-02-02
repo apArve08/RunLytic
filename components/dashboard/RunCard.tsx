@@ -8,9 +8,12 @@ import { formatPace, formatDuration, formatDistance } from '@/lib/utils'
 import { Calendar, Clock, TrendingUp, Footprints, Sparkles } from 'lucide-react'
 import { format } from 'date-fns'
 import { useRouter } from 'next/navigation'
+import { PRBadge } from '../records/PRBadge'
+import { WeatherBadge } from '../weather/WeatherBadge'
 
 interface RunCardProps {
   run: Run
+
 }
 
 export function RunCard({ run }: RunCardProps) {
@@ -67,6 +70,18 @@ export function RunCard({ run }: RunCardProps) {
             {formatDistance(run.distance)}
           </p>
         </div>
+        {run.personal_records && run.personal_records.length > 0 && (
+          <div className="flex flex-wrap gap-2 mb-3">
+            {run.personal_records.map((pr: any, idx: number) => (
+              <PRBadge key={idx} type="current" recordType={pr.record_type} />
+            ))}
+          </div>
+        )}
+
+        {/* Weather Badge */}
+        {run.weather_data && (
+          <WeatherBadge weather={run.weather_data} compact />
+        )}
       </div>
 
       <div className="grid grid-cols-2 gap-4 mb-3">

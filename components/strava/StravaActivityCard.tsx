@@ -16,7 +16,7 @@ export function StravaActivityCard({ activity, selected = false }: StravaActivit
   const [showMap, setShowMap] = useState(false)
 
   // Decode polyline
-  let routeData: RoutePoint[] | null = null
+  let routeData: RoutePoint[] = []
   if (activity.map?.summary_polyline) {
     try {
       const coordinates = polyline.decode(activity.map.summary_polyline)

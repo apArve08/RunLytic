@@ -45,6 +45,10 @@ export function RunForm({ shoes }: RunFormProps) {
       const durationSeconds = durationMinutes * 60
       const avgSpeed = (distance / (durationSeconds / 3600)).toFixed(2) // km/h
 
+
+
+
+
       const response = await fetch('/api/runs', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -63,10 +67,16 @@ export function RunForm({ shoes }: RunFormProps) {
 
         }),
       })
-
+    
+      router.push('/')
+      router.refresh()
       if (!response.ok) throw new Error('Failed to create run')
 
-      const { run } = await response.json()
+      const { run, newPRs } = await response.json()
+      if (newPRs && newPRs.length > 0) {
+        localStorage.setItem('newPRs', JSON.stringify(newPRs))
+      }
+      
       router.push(`/runs/${run.id}`)
       router.refresh()
     } catch (err) {
