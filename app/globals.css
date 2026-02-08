@@ -59,3 +59,13 @@
     @apply bg-background text-foreground;
   }
 }
+.group:hover > div {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.group > div {
+  transform: translateY(-10px);
+  transition: all 0.2s ease-in-out;
+}

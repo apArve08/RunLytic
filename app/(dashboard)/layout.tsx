@@ -222,7 +222,8 @@ export default async function DashboardLayout({
 
           <Link
             href="/schedule"
-            className="flex flex-col items-center gap-1 px-2 py-3 text-gray-600 hover:text-blue-600 transition"
+            className="flex flex-col items-center
+             gap-1 px-2 py-3 text-gray-600 hover:text-blue-600 transition"
           >
             <Calendar className="w-5 h-5" />
             <span className="text-xs">Schedule</span>
