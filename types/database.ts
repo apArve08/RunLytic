@@ -246,3 +246,53 @@ export interface ZoneData {
   duration: number // seconds in this zone
   percentage: number
 }
+
+
+
+export type RaceDistance = '5K' | '10K' | 'HALF' | 'FULL' | 'CUSTOM'
+export type RaceStatus = 'upcoming' | 'completed' | 'cancelled'
+export type CostCategory = 'shoes' | 'race' | 'gear' | 'other'
+export type Theme = 'light' | 'dark' | 'auto'
+
+export interface Race {
+  id: string
+  user_id: string
+  name: string
+  date: string
+  distance: RaceDistance
+  custom_distance?: number
+  location?: string
+  goal_time?: number
+  registration_fee?: number
+  registration_date?: string
+  notes?: string
+  status: RaceStatus
+  result_time?: number
+  result_position?: number
+  weather_data?: WeatherData
+  created_at: string
+  updated_at: string
+}
+
+export interface RunningCost {
+  id: string
+  user_id: string
+  category: CostCategory
+  item_name: string
+  amount: number
+  currency: string
+  purchase_date: string
+  notes?: string
+  shoe_id?: string
+  race_id?: string
+  created_at: string
+}
+
+export interface UserPreferences {
+  user_id: string
+  theme: Theme
+  distance_unit: 'km' | 'mi'
+  temperature_unit: 'C' | 'F'
+  created_at: string
+  updated_at: string
+}
