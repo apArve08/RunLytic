@@ -1,17 +1,15 @@
-// tailwind.config.ts (ADD darkMode)
+// tailwind.config.ts
 import type { Config } from 'tailwindcss'
 
 const config: Config = {
-  darkMode: 'class', // ADD THIS LINE
+  darkMode: 'class', // THIS IS CRITICAL
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    extend: {
-      // ... existing config
-    },
+    extend: {},
   },
   plugins: [],
 }

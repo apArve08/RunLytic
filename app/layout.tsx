@@ -1,15 +1,16 @@
-// app/layout.tsx
+// app/layout.tsx (COMPLETE REPLACEMENT)
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import { ThemeProvider } from '@/components/providers/ThemeProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'RunTrack - Personal Running Analyzer',
-  description: 'Track your runs, analyze performance, and improve with AI insights',
+  title: 'RunTrack - Running Tracker',
+  description: 'Track your running journey',
 }
-// app/layout.tsx (ADD script tag)
+
 export default function RootLayout({
   children,
 }: {
@@ -22,11 +23,8 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
-                const theme = localStorage.getItem('theme') || 'light';
-                const actualTheme = theme === 'auto' 
-                  ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
-                  : theme;
-                if (actualTheme === 'dark') {
+                var theme = localStorage.getItem('theme');
+                if (theme === 'dark' || (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
                   document.documentElement.classList.add('dark');
                 }
               })();
@@ -34,7 +32,11 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   )
 }
