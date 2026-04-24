@@ -63,7 +63,7 @@ export default function SignupPage() {
 
       // Success - no email confirmation required (based on Supabase settings)
       setSuccess('Account created successfully! Redirecting...')
-      
+
       // Wait a moment then redirect
       setTimeout(() => {
         router.push('/')
@@ -77,13 +77,13 @@ export default function SignupPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
-      <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8">
+      <div className="max-w-md w-full bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
         <div className="flex items-center justify-center gap-2 mb-8">
           <Footprints className="w-8 h-8 text-blue-600" />
-          <h1 className="text-3xl font-bold text-gray-900">RunTrack</h1>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">RunTrack</h1>
         </div>
 
-        <h2 className="text-2xl font-semibold text-center mb-6">Create your account</h2>
+        <h2 className="text-2xl font-semibold text-center mb-6 text-gray-900 dark:text-white">Create your account</h2>
 
         {error && (
           <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">
@@ -100,7 +100,7 @@ export default function SignupPage() {
         <form onSubmit={handleSignup} className="space-y-4">
           {/* Email */}
           <div>
-            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               <Mail className="w-4 h-4" />
               Email
             </label>
@@ -108,18 +108,18 @@ export default function SignupPage() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
               placeholder="you@example.com"
               required
             />
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
               Use any email (e.g., test@test.com for testing)
             </p>
           </div>
 
           {/* Password */}
           <div>
-            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               <Lock className="w-4 h-4" />
               Password
             </label>
@@ -128,14 +128,14 @@ export default function SignupPage() {
                 type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-12"
+                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-12 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
                 placeholder="••••••••"
                 required
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
               >
                 {showPassword ? (
                   <EyeOff className="w-5 h-5" />
@@ -144,12 +144,12 @@ export default function SignupPage() {
                 )}
               </button>
             </div>
-            <p className="text-xs text-gray-500 mt-1">Minimum 6 characters</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Minimum 6 characters</p>
           </div>
 
           {/* Confirm Password */}
           <div>
-            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               <Lock className="w-4 h-4" />
               Confirm Password
             </label>
@@ -157,7 +157,7 @@ export default function SignupPage() {
               type={showPassword ? 'text' : 'password'}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
               placeholder="••••••••"
               required
             />
@@ -187,7 +187,7 @@ export default function SignupPage() {
           </button>
         </form>
 
-        <p className="text-center text-gray-600 mt-6">
+        <p className="text-center text-gray-600 dark:text-gray-400 mt-6">
           Already have an account?{' '}
           <Link href="/login" className="text-blue-600 hover:text-blue-700 font-medium">
             Sign in
@@ -195,9 +195,9 @@ export default function SignupPage() {
         </p>
 
         {/* Development Note */}
-        <div className="mt-6 pt-6 border-t border-gray-200">
-          <p className="text-xs text-gray-500 text-center">
-            💡 <strong>Testing tip:</strong> Use dummy emails like test@test.com, 
+        <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+          <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
+            💡 <strong>Testing tip:</strong> Use dummy emails like test@test.com,
             demo@demo.com for quick testing
           </p>
         </div>

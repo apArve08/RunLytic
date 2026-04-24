@@ -35,8 +35,8 @@ export default function ZonesPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Training Zones</h1>
-        <p className="text-gray-600 mt-1">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Training Zones</h1>
+        <p className="text-gray-600 dark:text-gray-400 mt-1">
           Analyze your heart rate zones and training distribution
         </p>
       </div>

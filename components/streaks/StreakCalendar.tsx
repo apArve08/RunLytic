@@ -16,22 +16,22 @@ export function StreakCalendar({ runs, month }: StreakCalendarProps) {
     const monthEnd = endOfMonth(month)
     const calendarStart = startOfWeek(monthStart, { weekStartsOn: 0 }) // Sunday
     const calendarEnd = endOfWeek(monthEnd, { weekStartsOn: 0 })
-    
+
     const days = eachDayOfInterval({ start: calendarStart, end: calendarEnd })
-    
+
     // Create run dates set for quick lookup
     const runDates = new Set(runs.map(run => run.date))
-    
+
     // Calculate max distance for color intensity
     const maxDistance = Math.max(...runs.map(r => parseFloat(String(r.distance))), 1)
-    
+
     return days.map(day => {
       const dateStr = format(day, 'yyyy-MM-dd')
       const hasRun = runDates.has(dateStr)
       const dayRuns = runs.filter(r => r.date === dateStr)
       const totalDistance = dayRuns.reduce((sum, r) => sum + parseFloat(String(r.distance)), 0)
       const intensity = hasRun ? Math.min(totalDistance / maxDistance, 1) : 0
-      
+
       return {
         date: day,
         dateStr,
@@ -45,7 +45,7 @@ export function StreakCalendar({ runs, month }: StreakCalendarProps) {
   }, [runs, month])
 
   const getColorClass = (intensity: number, hasRun: boolean) => {
-    if (!hasRun) return 'bg-gray-100'
+    if (!hasRun) return 'bg-gray-100 dark:bg-gray-700'
     if (intensity >= 0.8) return 'bg-green-600'
     if (intensity >= 0.6) return 'bg-green-500'
     if (intensity >= 0.4) return 'bg-green-400'
@@ -56,15 +56,15 @@ export function StreakCalendar({ runs, month }: StreakCalendarProps) {
   const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-      <h3 className="text-lg font-semibold text-gray-900 mb-4">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
         Activity Heatmap - {format(month, 'MMMM yyyy')}
       </h3>
 
       {/* Week day labels */}
       <div className="grid grid-cols-7 gap-1 mb-2">
         {weekDays.map(day => (
-          <div key={day} className="text-center text-xs font-medium text-gray-500 py-1">
+          <div key={day} className="text-center text-xs font-medium text-gray-500 dark:text-gray-400 py-1">
             {day}
           </div>
         ))}
@@ -105,10 +105,10 @@ export function StreakCalendar({ runs, month }: StreakCalendarProps) {
       </div>
 
       {/* Legend */}
-      <div className="flex items-center gap-2 mt-4 text-xs text-gray-600">
+      <div className="flex items-center gap-2 mt-4 text-xs text-gray-600 dark:text-gray-400">
         <span>Less</span>
         <div className="flex gap-1">
-          <div className="w-3 h-3 bg-gray-100 rounded-sm" />
+          <div className="w-3 h-3 bg-gray-100 dark:bg-gray-700 rounded-sm" />
           <div className="w-3 h-3 bg-green-200 rounded-sm" />
           <div className="w-3 h-3 bg-green-300 rounded-sm" />
           <div className="w-3 h-3 bg-green-400 rounded-sm" />

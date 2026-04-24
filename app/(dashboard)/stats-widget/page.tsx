@@ -35,8 +35,8 @@ export default function StatsWidgetPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Stats Widget</h1>
-        <p className="text-gray-600 mt-1">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Stats Widget</h1>
+        <p className="text-gray-600 dark:text-gray-400 mt-1">
           Share your running stats on social media
         </p>
       </div>

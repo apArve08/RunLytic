@@ -26,20 +26,20 @@ export function WeatherBadge({ weather, compact = false }: WeatherBadgeProps) {
         <div className="text-4xl">{getWeatherEmoji(weather.conditions)}</div>
         <div>
           <div className="text-3xl font-bold text-blue-700">{weather.temp}°C</div>
-          <div className="text-sm text-gray-600">{weather.conditions}</div>
+          <div className="text-sm text-gray-600 dark:text-gray-400">{weather.conditions}</div>
         </div>
       </div>
 
       <div className="grid grid-cols-3 gap-3 text-sm">
-        <div className="flex items-center gap-1 text-gray-600">
+        <div className="flex items-center gap-1 text-gray-600 dark:text-gray-400">
           <Cloud className="w-4 h-4" />
           <span>Feels {weather.feels_like}°C</span>
         </div>
-        <div className="flex items-center gap-1 text-gray-600">
+        <div className="flex items-center gap-1 text-gray-600 dark:text-gray-400">
           <Droplet className="w-4 h-4" />
           <span>{weather.humidity}%</span>
         </div>
-        <div className="flex items-center gap-1 text-gray-600">
+        <div className="flex items-center gap-1 text-gray-600 dark:text-gray-400">
           <Wind className="w-4 h-4" />
           <span>{weather.wind_speed} km/h</span>
         </div>

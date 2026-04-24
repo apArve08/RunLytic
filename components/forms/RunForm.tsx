@@ -45,10 +45,6 @@ export function RunForm({ shoes }: RunFormProps) {
       const durationSeconds = durationMinutes * 60
       const avgSpeed = (distance / (durationSeconds / 3600)).toFixed(2) // km/h
 
-
-
-
-
       const response = await fetch('/api/runs', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -64,10 +60,9 @@ export function RunForm({ shoes }: RunFormProps) {
           elevation_loss: formData.elevation_loss ? parseFloat(formData.elevation_loss) : null,
           avg_speed: parseFloat(avgSpeed),
           route_data: routeData.length > 0 ? routeData : null,
-
         }),
       })
-    
+
       router.push('/')
       router.refresh()
       if (!response.ok) throw new Error('Failed to create run')
@@ -76,7 +71,7 @@ export function RunForm({ shoes }: RunFormProps) {
       if (newPRs && newPRs.length > 0) {
         localStorage.setItem('newPRs', JSON.stringify(newPRs))
       }
-      
+
       router.push(`/runs/${run.id}`)
       router.refresh()
     } catch (err) {
@@ -97,7 +92,7 @@ export function RunForm({ shoes }: RunFormProps) {
 
       {/* Date */}
       <div>
-        <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+        <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
           <Calendar className="w-4 h-4" />
           Date
         </label>
@@ -105,7 +100,7 @@ export function RunForm({ shoes }: RunFormProps) {
           type="date"
           value={formData.date}
           onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
           required
         />
       </div>
@@ -113,7 +108,7 @@ export function RunForm({ shoes }: RunFormProps) {
       {/* Distance & Duration */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+          <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             <Footprints className="w-4 h-4" />
             Distance (km)
           </label>
@@ -122,14 +117,14 @@ export function RunForm({ shoes }: RunFormProps) {
             step="0.01"
             value={formData.distance}
             onChange={(e) => setFormData({ ...formData, distance: e.target.value })}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
             placeholder="5.00"
             required
           />
         </div>
 
         <div>
-          <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+          <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             <Clock className="w-4 h-4" />
             Duration (minutes)
           </label>
@@ -138,7 +133,7 @@ export function RunForm({ shoes }: RunFormProps) {
             step="0.1"
             value={formData.duration}
             onChange={(e) => setFormData({ ...formData, duration: e.target.value })}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
             placeholder="30"
             required
           />
@@ -169,14 +164,14 @@ export function RunForm({ shoes }: RunFormProps) {
 
       {/* Shoes */}
       <div>
-        <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+        <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
           <Footprints className="w-4 h-4" />
           Shoes (optional)
         </label>
         <select
           value={formData.shoes_id}
           onChange={(e) => setFormData({ ...formData, shoes_id: e.target.value })}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
         >
           <option value="">No shoes tracked</option>
           {shoes
@@ -204,13 +199,13 @@ export function RunForm({ shoes }: RunFormProps) {
 
       {/* Advanced Fields */}
       {showAdvanced && (
-        <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 space-y-4">
-          <h4 className="font-medium text-gray-900 mb-3">Advanced Metrics</h4>
+        <div className="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-4 space-y-4">
+          <h4 className="font-medium text-gray-900 dark:text-white mb-3">Advanced Metrics</h4>
 
           {/* Heart Rate */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+              <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 <Heart className="w-4 h-4" />
                 Avg Heart Rate (bpm)
               </label>
@@ -218,13 +213,13 @@ export function RunForm({ shoes }: RunFormProps) {
                 type="number"
                 value={formData.avg_heart_rate}
                 onChange={(e) => setFormData({ ...formData, avg_heart_rate: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
                 placeholder="140"
               />
             </div>
 
             <div>
-              <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+              <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 <Heart className="w-4 h-4 text-red-500" />
                 Max Heart Rate (bpm)
               </label>
@@ -232,7 +227,7 @@ export function RunForm({ shoes }: RunFormProps) {
                 type="number"
                 value={formData.max_heart_rate}
                 onChange={(e) => setFormData({ ...formData, max_heart_rate: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
                 placeholder="175"
               />
             </div>
@@ -241,7 +236,7 @@ export function RunForm({ shoes }: RunFormProps) {
           {/* Elevation */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+              <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 <Mountain className="w-4 h-4 text-green-600" />
                 Elevation Gain (m)
               </label>
@@ -250,13 +245,13 @@ export function RunForm({ shoes }: RunFormProps) {
                 step="0.1"
                 value={formData.elevation_gain}
                 onChange={(e) => setFormData({ ...formData, elevation_gain: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
                 placeholder="50"
               />
             </div>
 
             <div>
-              <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+              <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 <Mountain className="w-4 h-4 text-red-600 rotate-180" />
                 Elevation Loss (m)
               </label>
@@ -265,7 +260,7 @@ export function RunForm({ shoes }: RunFormProps) {
                 step="0.1"
                 value={formData.elevation_loss}
                 onChange={(e) => setFormData({ ...formData, elevation_loss: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
                 placeholder="45"
               />
             </div>
@@ -289,7 +284,7 @@ export function RunForm({ shoes }: RunFormProps) {
       )}
       {/* Notes */}
       <div>
-        <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+        <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
           <StickyNote className="w-4 h-4" />
           Notes (optional)
         </label>
@@ -297,7 +292,7 @@ export function RunForm({ shoes }: RunFormProps) {
           value={formData.notes}
           onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
           rows={4}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
           placeholder="How did the run feel? Weather conditions? Any pain or discomfort?"
         />
       </div>

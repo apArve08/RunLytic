@@ -18,7 +18,7 @@ export function WeatherAnalysis({ runs }: WeatherAnalysisProps) {
 
   const analyzeWeatherImpact = () => {
     const runsWithWeather = runs.filter(r => r.weather_data)
-    
+
     if (runsWithWeather.length < 5) {
       setAnalysis(null)
       return
@@ -63,8 +63,8 @@ export function WeatherAnalysis({ runs }: WeatherAnalysisProps) {
 
   if (!analysis || analysis.moderate.count === 0) {
     return (
-      <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 text-center">
-        <p className="text-gray-600">
+      <div className="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg p-6 text-center">
+        <p className="text-gray-600 dark:text-gray-400">
           Log more runs with GPS data to see weather impact analysis!
         </p>
       </div>
@@ -77,8 +77,8 @@ export function WeatherAnalysis({ runs }: WeatherAnalysisProps) {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-      <h3 className="text-lg font-semibold text-gray-900 mb-4">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
         Weather Impact Analysis
       </h3>
 
@@ -118,12 +118,12 @@ export function WeatherAnalysis({ runs }: WeatherAnalysisProps) {
           {analysis.hot.avgPace > 0 && (
             <div className="flex items-start gap-2">
               {getPerformanceChange(analysis.hot.avgPace, analysis.moderate.avgPace) > 0 ? (
-                <TrendingDown className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />
+                <TrendingDown className="w-4 h-4 text-red-500 mt-0.5 shrink-0" />
               ) : (
-                <TrendingUp className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                <TrendingUp className="w-4 h-4 text-green-500 mt-0.5 shrink-0" />
               )}
               <span>
-                You run {Math.abs(getPerformanceChange(analysis.hot.avgPace, analysis.moderate.avgPace)).toFixed(1)}% 
+                You run {Math.abs(getPerformanceChange(analysis.hot.avgPace, analysis.moderate.avgPace)).toFixed(1)}%
                 {getPerformanceChange(analysis.hot.avgPace, analysis.moderate.avgPace) > 0 ? ' slower' : ' faster'} when it's hot (25°C)
               </span>
             </div>
@@ -132,9 +132,9 @@ export function WeatherAnalysis({ runs }: WeatherAnalysisProps) {
           {analysis.cold.avgPace > 0 && (
             <div className="flex items-start gap-2">
               {getPerformanceChange(analysis.cold.avgPace, analysis.moderate.avgPace) > 0 ? (
-                <TrendingDown className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />
+                <TrendingDown className="w-4 h-4 text-red-500 mt-0.5 shrink-0" />
               ) : (
-                <TrendingUp className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                <TrendingUp className="w-4 h-4 text-green-500 mt-0.5 shrink-0" />
               )}
               <span>
                 You run {Math.abs(getPerformanceChange(analysis.cold.avgPace, analysis.moderate.avgPace)).toFixed(1)}%

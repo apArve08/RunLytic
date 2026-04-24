@@ -66,18 +66,18 @@ export function StatsOverview({ runs }: StatsOverviewProps) {
     <div className="space-y-6">
       {/* All-time stats */}
       <div>
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">All-Time Stats</h2>
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">All-Time Stats</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {stats.map((stat) => (
             <div
               key={stat.label}
-              className="bg-white rounded-lg shadow-sm border border-gray-200 p-4"
+              className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4"
             >
               <div className={`w-10 h-10 rounded-lg ${stat.bg} flex items-center justify-center mb-3`}>
                 <stat.icon className={`w-5 h-5 ${stat.color}`} />
               </div>
-              <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
-              <p className="text-sm text-gray-500 mt-1">{stat.label}</p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{stat.label}</p>
             </div>
           ))}
         </div>
@@ -85,30 +85,30 @@ export function StatsOverview({ runs }: StatsOverviewProps) {
 
       {/* Recent stats */}
       <div>
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h2>
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Recent Activity</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-5">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-5">
             <div className="flex items-center justify-between mb-2">
-              <h3 className="text-sm font-medium text-gray-600">This Week</h3>
+              <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">This Week</h3>
               <Calendar className="w-4 h-4 text-gray-400" />
             </div>
-            <p className="text-2xl font-bold text-gray-900">
+            <p className="text-2xl font-bold text-gray-900 dark:text-white">
               {formatDistance(thisWeekDistance)}
             </p>
-            <p className="text-sm text-gray-500 mt-1">
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
               {thisWeekRuns.length} run{thisWeekRuns.length !== 1 ? 's' : ''}
             </p>
           </div>
 
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-5">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-5">
             <div className="flex items-center justify-between mb-2">
-              <h3 className="text-sm font-medium text-gray-600">This Month</h3>
+              <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">This Month</h3>
               <Calendar className="w-4 h-4 text-gray-400" />
             </div>
-            <p className="text-2xl font-bold text-gray-900">
+            <p className="text-2xl font-bold text-gray-900 dark:text-white">
               {formatDistance(thisMonthDistance)}
             </p>
-            <p className="text-sm text-gray-500 mt-1">
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
               {thisMonthRuns.length} run{thisMonthRuns.length !== 1 ? 's' : ''}
             </p>
           </div>

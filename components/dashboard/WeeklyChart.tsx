@@ -39,8 +39,8 @@ export function WeeklyChart({ runs }: WeeklyChartProps) {
   })
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-      <h3 className="text-lg font-semibold text-gray-900 mb-6">This Week's Activity</h3>
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">This Week's Activity</h3>
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={weekData}>
           <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />

@@ -18,11 +18,11 @@ export function StreakBadge({ currentStreak, longestStreak }: StreakBadgeProps) 
             <Flame className="w-6 h-6 text-white" />
           </div>
           <div>
-            <div className="text-sm text-gray-600 font-medium">Current Streak</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">Current Streak</div>
             <div className="text-3xl font-bold text-orange-600">{currentStreak}</div>
           </div>
         </div>
-        <div className="text-sm text-gray-600">
+        <div className="text-sm text-gray-600 dark:text-gray-400">
           {currentStreak === 0 && "Start your streak today!"}
           {currentStreak === 1 && "Keep it going! 🔥"}
           {currentStreak >= 2 && currentStreak < 7 && "You're on fire! 🔥"}
@@ -38,11 +38,11 @@ export function StreakBadge({ currentStreak, longestStreak }: StreakBadgeProps) 
             <Award className="w-6 h-6 text-white" />
           </div>
           <div>
-            <div className="text-sm text-gray-600 font-medium">Longest Streak</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">Longest Streak</div>
             <div className="text-3xl font-bold text-purple-600">{longestStreak}</div>
           </div>
         </div>
-        <div className="text-sm text-gray-600">
+        <div className="text-sm text-gray-600 dark:text-gray-400">
           {currentStreak === longestStreak && currentStreak > 0 && "New personal best! 🏆"}
           {currentStreak < longestStreak && `${longestStreak - currentStreak} days to beat your record`}
           {longestStreak === 0 && "Start building your streak!"}

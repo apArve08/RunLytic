@@ -24,7 +24,7 @@ export function ReportModal({ report, onClose }: ReportModalProps) {
 
   const getTrendIcon = () => {
     if (!report.key_insights?.trend) return <Minus className="w-5 h-5" />
-    
+
     switch (report.key_insights.trend) {
       case 'improving':
         return <TrendingUp className="w-5 h-5 text-green-600" />
@@ -37,7 +37,7 @@ export function ReportModal({ report, onClose }: ReportModalProps) {
 
   const getTrendColor = () => {
     if (!report.key_insights?.trend) return 'gray'
-    
+
     switch (report.key_insights.trend) {
       case 'improving':
         return 'green'
@@ -50,21 +50,21 @@ export function ReportModal({ report, onClose }: ReportModalProps) {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
+        <div className="sticky top-0 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4 flex items-center justify-between">
           <div>
-            <h2 className="text-2xl font-bold text-gray-900">Progress Report</h2>
-            <p className="text-sm text-gray-500 mt-1 flex items-center gap-2">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Progress Report</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 flex items-center gap-2">
               <Calendar className="w-4 h-4" />
               {format(new Date(report.report_date), 'MMMM d, yyyy')}
             </p>
           </div>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-lg transition"
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition"
           >
-            <X className="w-6 h-6 text-gray-500" />
+            <X className="w-6 h-6 text-gray-500 dark:text-gray-400" />
           </button>
         </div>
 
@@ -73,7 +73,7 @@ export function ReportModal({ report, onClose }: ReportModalProps) {
           {/* Trend Summary */}
           <div className={`bg-${getTrendColor()}-50 border border-${getTrendColor()}-200 rounded-lg p-6`}>
             <div className="flex items-start gap-4">
-              <div className={`w-12 h-12 bg-${getTrendColor()}-100 rounded-full flex items-center justify-center flex-shrink-0`}>
+              <div className={`w-12 h-12 bg-${getTrendColor()}-100 rounded-full flex items-center justify-center shrink-0`}>
                 {getTrendIcon()}
               </div>
               <div>

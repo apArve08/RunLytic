@@ -22,7 +22,6 @@ export function TrainingZones({ runs, userAge = 30 }: TrainingZonesProps) {
 
     const zones = getZoneBoundaries(maxHR)
 
-    // Classify runs by zone based on average HR
     const zoneDistribution = {
       Z1: 0,
       Z2: 0,
@@ -55,8 +54,8 @@ export function TrainingZones({ runs, userAge = 30 }: TrainingZonesProps) {
       zone: zone as any,
       ...data,
       duration: zoneDistribution[zone as keyof typeof zoneDistribution],
-      percentage: totalDuration > 0 
-        ? (zoneDistribution[zone as keyof typeof zoneDistribution] / totalDuration) * 100 
+      percentage: totalDuration > 0
+        ? (zoneDistribution[zone as keyof typeof zoneDistribution] / totalDuration) * 100
         : 0,
     }))
 
@@ -82,11 +81,11 @@ export function TrainingZones({ runs, userAge = 30 }: TrainingZonesProps) {
         <p className="text-sm text-gray-600 mb-4">
           Add heart rate data to your runs to see training zone analysis
         </p>
-        <div className="bg-white rounded-lg p-4 text-left max-w-md mx-auto">
-          <p className="text-sm text-gray-700 mb-2">
+        <div className="bg-white dark:bg-gray-800 rounded-lg p-4 text-left max-w-md mx-auto">
+          <p className="text-sm text-gray-700 dark:text-gray-300 mb-2">
             <strong>How to add heart rate data:</strong>
           </p>
-          <ol className="text-sm text-gray-600 space-y-1 list-decimal list-inside">
+          <ol className="text-sm text-gray-600 dark:text-gray-400 space-y-1 list-decimal list-inside">
             <li>When logging a run, click "Show Advanced Data"</li>
             <li>Enter your average and max heart rate</li>
             <li>Or import runs from Strava with HR data</li>
@@ -110,36 +109,36 @@ export function TrainingZones({ runs, userAge = 30 }: TrainingZonesProps) {
   return (
     <div className="space-y-6">
       {/* Max HR Setting */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h3 className="text-lg font-semibold text-gray-900">Training Zones</h3>
-            <p className="text-sm text-gray-600 mt-1">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Training Zones</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
               Based on {runsWithHR.length} run{runsWithHR.length !== 1 ? 's' : ''} with heart rate data
             </p>
           </div>
           <button
             onClick={() => setShowSettings(!showSettings)}
-            className="p-2 hover:bg-gray-100 rounded-lg transition"
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition"
           >
-            <Settings className="w-5 h-5 text-gray-600" />
+            <Settings className="w-5 h-5 text-gray-600 dark:text-gray-400" />
           </button>
         </div>
 
         {/* Settings Panel */}
         {showSettings && (
-          <div className="mb-6 bg-gray-50 border border-gray-200 rounded-lg p-4">
+          <div className="mb-6 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-4">
             <div className="flex items-center gap-4">
-              <label className="text-sm text-gray-700 font-medium">Max Heart Rate:</label>
+              <label className="text-sm text-gray-700 dark:text-gray-300 font-medium">Max Heart Rate:</label>
               <input
                 type="number"
                 value={maxHR}
                 onChange={(e) => setMaxHR(parseInt(e.target.value) || 180)}
-                className="w-24 px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                className="w-24 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                 min="100"
                 max="220"
               />
-              <span className="text-sm text-gray-600">bpm</span>
+              <span className="text-sm text-gray-600 dark:text-gray-400">bpm</span>
               <button
                 onClick={() => setMaxHR(220 - userAge)}
                 className="text-sm text-blue-600 hover:text-blue-700 font-medium"
@@ -147,7 +146,7 @@ export function TrainingZones({ runs, userAge = 30 }: TrainingZonesProps) {
                 Reset to default (220 - age)
               </button>
             </div>
-            <p className="text-xs text-gray-500 mt-2">
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
               💡 Adjust your max HR for more accurate zone calculations
             </p>
           </div>
@@ -161,19 +160,19 @@ export function TrainingZones({ runs, userAge = 30 }: TrainingZonesProps) {
                 <div className="flex items-center gap-3">
                   <div className={`w-4 h-4 rounded ${zone.color}`} />
                   <span className="font-semibold min-w-[40px]">{zone.zone}</span>
-                  <span className="text-gray-700">{zone.name}</span>
-                  <span className="text-gray-500">({zone.min}-{zone.max} bpm)</span>
+                  <span className="text-gray-700 dark:text-gray-300">{zone.name}</span>
+                  <span className="text-gray-500 dark:text-gray-400">({zone.min}-{zone.max} bpm)</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="text-gray-500 text-xs">
+                  <span className="text-gray-500 dark:text-gray-400 text-xs">
                     {formatDuration(zone.duration)}
                   </span>
-                  <span className="font-medium text-gray-700 min-w-[50px] text-right">
+                  <span className="font-medium text-gray-700 dark:text-gray-300 min-w-[50px] text-right">
                     {zone.percentage.toFixed(1)}%
                   </span>
                 </div>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-8 relative overflow-hidden">
+              <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-8 relative overflow-hidden">
                 <div
                   className={`h-8 rounded-full ${zone.color} transition-all duration-500 flex items-center justify-center`}
                   style={{ width: `${zone.percentage}%` }}
@@ -242,33 +241,33 @@ export function TrainingZones({ runs, userAge = 30 }: TrainingZonesProps) {
       </div>
 
       {/* 80/20 Rule Compliance */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
         <div className="flex items-center gap-2 mb-4">
           <Award className="w-5 h-5 text-purple-600" />
-          <h4 className="font-semibold text-gray-900">80/20 Rule Compliance</h4>
+          <h4 className="font-semibold text-gray-900 dark:text-white">80/20 Rule Compliance</h4>
         </div>
 
         <div className="mb-4">
           <div className="flex justify-between text-sm mb-2">
-            <span className="text-gray-600">Target: 80% easy, 20% hard</span>
+            <span className="text-gray-600 dark:text-gray-400">Target: 80% easy, 20% hard</span>
             <span className={`font-medium ${
-              zoneAnalysis.easyPercentage >= 75 && zoneAnalysis.easyPercentage <= 85 
-                ? 'text-green-600' 
+              zoneAnalysis.easyPercentage >= 75 && zoneAnalysis.easyPercentage <= 85
+                ? 'text-green-600'
                 : 'text-orange-600'
             }`}>
               {zoneAnalysis.easyPercentage.toFixed(1)}% easy
             </span>
           </div>
-          <div className="relative w-full bg-gray-200 rounded-full h-6">
+          <div className="relative w-full bg-gray-200 dark:bg-gray-700 rounded-full h-6">
             {/* Target zone indicator */}
             <div className="absolute top-0 left-[75%] w-[10%] h-6 bg-green-200 opacity-50 rounded-r-full" />
             <div className="absolute top-0 left-[75%] h-6 w-px bg-green-500" />
-            
+
             {/* Actual percentage */}
             <div
               className={`h-6 rounded-full transition-all duration-500 flex items-center justify-end pr-2 ${
-                zoneAnalysis.easyPercentage >= 75 && zoneAnalysis.easyPercentage <= 85 
-                  ? 'bg-green-500' 
+                zoneAnalysis.easyPercentage >= 75 && zoneAnalysis.easyPercentage <= 85
+                  ? 'bg-green-500'
                   : 'bg-orange-500'
               }`}
               style={{ width: `${zoneAnalysis.easyPercentage}%` }}
@@ -287,7 +286,7 @@ export function TrainingZones({ runs, userAge = 30 }: TrainingZonesProps) {
             : 'bg-orange-50 border border-orange-200'
         }`}>
           <div className="flex items-start gap-3">
-            <div className="flex-shrink-0 mt-0.5">
+            <div className="shrink-0 mt-0.5">
               {zoneAnalysis.easyPercentage >= 75 && zoneAnalysis.easyPercentage <= 85 ? (
                 <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
                   <span className="text-white text-sm">✓</span>
@@ -299,23 +298,23 @@ export function TrainingZones({ runs, userAge = 30 }: TrainingZonesProps) {
               )}
             </div>
             <div className={`text-sm ${
-              zoneAnalysis.easyPercentage >= 75 && zoneAnalysis.easyPercentage <= 85 
-                ? 'text-green-800' 
+              zoneAnalysis.easyPercentage >= 75 && zoneAnalysis.easyPercentage <= 85
+                ? 'text-green-800'
                 : 'text-orange-800'
             }`}>
               {zoneAnalysis.easyPercentage >= 75 && zoneAnalysis.easyPercentage <= 85 ? (
                 <>
-                  <strong>Excellent balance!</strong> You're following the 80/20 rule well. 
+                  <strong>Excellent balance!</strong> You're following the 80/20 rule well.
                   This is optimal for building aerobic fitness while minimizing injury risk.
                 </>
               ) : zoneAnalysis.easyPercentage < 75 ? (
                 <>
-                  <strong>Too much intensity.</strong> You're doing {(100 - zoneAnalysis.easyPercentage).toFixed(0)}% hard training. 
+                  <strong>Too much intensity.</strong> You're doing {(100 - zoneAnalysis.easyPercentage).toFixed(0)}% hard training.
                   Add more easy Zone 2 runs to improve aerobic base and reduce injury risk.
                 </>
               ) : (
                 <>
-                  <strong>Consider adding quality.</strong> You're at {zoneAnalysis.easyPercentage.toFixed(0)}% easy. 
+                  <strong>Consider adding quality.</strong> You're at {zoneAnalysis.easyPercentage.toFixed(0)}% easy.
                   Adding 1-2 hard sessions per week could improve your speed and race performance.
                 </>
               )}
@@ -336,40 +335,40 @@ export function TrainingZones({ runs, userAge = 30 }: TrainingZonesProps) {
       </div>
 
       {/* Zone Reference Table */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <h4 className="font-semibold text-gray-900 mb-4">Zone Reference Guide</h4>
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+        <h4 className="font-semibold text-gray-900 dark:text-white mb-4">Zone Reference Guide</h4>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-gray-200">
-                <th className="text-left py-2 px-3 font-medium text-gray-700">Zone</th>
-                <th className="text-left py-2 px-3 font-medium text-gray-700">HR Range</th>
-                <th className="text-left py-2 px-3 font-medium text-gray-700">Name</th>
-                <th className="text-left py-2 px-3 font-medium text-gray-700">Purpose</th>
-                <th className="text-left py-2 px-3 font-medium text-gray-700">Feel</th>
+              <tr className="border-b border-gray-200 dark:border-gray-700">
+                <th className="text-left py-2 px-3 font-medium text-gray-700 dark:text-gray-300">Zone</th>
+                <th className="text-left py-2 px-3 font-medium text-gray-700 dark:text-gray-300">HR Range</th>
+                <th className="text-left py-2 px-3 font-medium text-gray-700 dark:text-gray-300">Name</th>
+                <th className="text-left py-2 px-3 font-medium text-gray-700 dark:text-gray-300">Purpose</th>
+                <th className="text-left py-2 px-3 font-medium text-gray-700 dark:text-gray-300">Feel</th>
               </tr>
             </thead>
             <tbody>
               {Object.entries(zoneAnalysis.zones).map(([zone, data]) => (
-                <tr key={zone} className="border-b border-gray-100">
+                <tr key={zone} className="border-b border-gray-100 dark:border-gray-700">
                   <td className="py-3 px-3">
                     <div className="flex items-center gap-2">
                       <div className={`w-3 h-3 rounded ${data.color}`} />
                       <span className="font-semibold">{zone}</span>
                     </div>
                   </td>
-                  <td className="py-3 px-3 text-gray-600">
+                  <td className="py-3 px-3 text-gray-600 dark:text-gray-400">
                     {data.min}-{data.max} bpm
                   </td>
-                  <td className="py-3 px-3 font-medium text-gray-900">{data.name}</td>
-                  <td className="py-3 px-3 text-gray-600">
+                  <td className="py-3 px-3 font-medium text-gray-900 dark:text-white">{data.name}</td>
+                  <td className="py-3 px-3 text-gray-600 dark:text-gray-400">
                     {zone === 'Z1' && 'Active recovery'}
                     {zone === 'Z2' && 'Aerobic base building'}
                     {zone === 'Z3' && 'Tempo/threshold training'}
                     {zone === 'Z4' && 'Lactate threshold'}
                     {zone === 'Z5' && 'VO2 max development'}
                   </td>
-                  <td className="py-3 px-3 text-gray-600">
+                  <td className="py-3 px-3 text-gray-600 dark:text-gray-400">
                     {zone === 'Z1' && 'Very easy'}
                     {zone === 'Z2' && 'Conversational'}
                     {zone === 'Z3' && 'Comfortable hard'}

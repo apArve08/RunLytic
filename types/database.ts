@@ -32,6 +32,7 @@ export interface Shoe {
   nickname: string | null
   total_distance: number
   purchase_date: string | null
+  purchase_price: number | null
   retired: boolean
   created_at: string
   updated_at: string

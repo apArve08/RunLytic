@@ -26,7 +26,7 @@ export default function DashboardPage() {
   useEffect(() => {
     fetchRuns()
     fetchStreaks()
-    
+
     // Check for new PRs in localStorage (set after logging a run)
     const storedPRs = localStorage.getItem('newPRs')
     if (storedPRs) {
@@ -84,8 +84,8 @@ export default function DashboardPage() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-          <p className="text-gray-600 mt-1">Track your running progress</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
+          <p className="text-gray-600 dark:text-gray-400 mt-1">Track your running progress</p>
         </div>
         <Link
           href="/runs/new"
@@ -97,15 +97,15 @@ export default function DashboardPage() {
       </div>
 
       {/* Time Range Selector */}
-      <div className="flex bg-gray-100 rounded-lg p-1 w-fit">
+      <div className="flex bg-gray-100 dark:bg-gray-800 rounded-lg p-1 w-fit">
         {(['week', 'month', 'year', 'all'] as const).map((range) => (
           <button
             key={range}
             onClick={() => setTimeRange(range)}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition capitalize ${
               timeRange === range
-                ? 'bg-white text-gray-900 shadow-sm'
-                : 'text-gray-600 hover:text-gray-900'
+                ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm'
+                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
             }`}
           >
             {range === 'all' ? 'All Time' : range}
@@ -119,9 +119,9 @@ export default function DashboardPage() {
       ) : (
         <>
           {/* Running Streaks */}
-          <StreakBadge 
-            currentStreak={streaks.currentStreak} 
-            longestStreak={streaks.longestStreak} 
+          <StreakBadge
+            currentStreak={streaks.currentStreak}
+            longestStreak={streaks.longestStreak}
           />
 
           {/* Stats Overview */}
@@ -145,7 +145,7 @@ export default function DashboardPage() {
           {/* Recent Runs */}
           <div>
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-semibold text-gray-900">Recent Runs</h2>
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Recent Runs</h2>
               <Link
                 href="/runs"
                 className="text-sm text-blue-600 hover:text-blue-700 font-medium"
@@ -161,8 +161,8 @@ export default function DashboardPage() {
                 ))}
               </div>
             ) : (
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
-                <p className="text-gray-500 mb-4">No runs logged yet</p>
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-12 text-center">
+                <p className="text-gray-500 dark:text-gray-400 mb-4">No runs logged yet</p>
                 <Link
                   href="/runs/new"
                   className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition"

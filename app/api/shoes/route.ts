@@ -40,7 +40,7 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json()
-    const { brand, model, nickname, purchase_date } = body
+    const { brand, model, nickname, purchase_date, purchase_price } = body
 
     const { data: shoe, error } = await supabase
       .from('shoes')
@@ -50,6 +50,7 @@ export async function POST(request: Request) {
         model,
         nickname: nickname || null,
         purchase_date: purchase_date || null,
+        purchase_price: purchase_price ?? null,
       })
       .select()
       .single()

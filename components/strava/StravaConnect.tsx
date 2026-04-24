@@ -52,17 +52,15 @@ export function StravaConnect() {
     try {
       const response = await fetch('/api/strava/activities?per_page=10')
       const data = await response.json()
-      
+
       if (response.ok) {
         setActivities(data.activities)
-        // Auto-select all by default
         setSelectedActivities(new Set(data.activities.map((a: any) => a.id)))
-        
-        // Count how many have routes
+
         const withRoutes = data.activities.filter(
           (a: any) => a.map?.summary_polyline
         ).length
-        
+
         if (withRoutes > 0) {
           alert(
             `Loaded ${data.activities.length} activities.\n${withRoutes} have GPS route data! 🗺️`
@@ -139,7 +137,6 @@ export function StravaConnect() {
             `Total processed: ${data.total}\n\n` +
             `Routes with GPS data are now viewable on run detail pages! 🗺️`
         )
-        // Clear activities after successful sync
         setActivities([])
         setSelectedActivities(new Set())
       } else {
@@ -155,7 +152,7 @@ export function StravaConnect() {
 
   if (loading) {
     return (
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
         <div className="animate-pulse">Loading Strava connection...</div>
       </div>
     )
@@ -164,17 +161,17 @@ export function StravaConnect() {
   return (
     <div className="space-y-6">
       {/* Connection Status */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
               <Activity className="w-6 h-6 text-orange-600" />
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-gray-900">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                 Strava Integration
               </h3>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
                 {connection
                   ? `Connected as ${connection.athlete_data?.firstname} ${connection.athlete_data?.lastname}`
                   : 'Connect your Strava account'}
@@ -196,24 +193,24 @@ export function StravaConnect() {
 
         {connection ? (
           <div className="space-y-4">
-            <div className="bg-gray-50 rounded-lg p-4">
+            <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
-                  <span className="text-gray-600">Athlete ID:</span>
-                  <span className="ml-2 font-medium text-gray-900">
+                  <span className="text-gray-600 dark:text-gray-400">Athlete ID:</span>
+                  <span className="ml-2 font-medium text-gray-900 dark:text-white">
                     {connection.athlete_id}
                   </span>
                 </div>
                 <div>
-                  <span className="text-gray-600">Connected:</span>
-                  <span className="ml-2 font-medium text-gray-900">
+                  <span className="text-gray-600 dark:text-gray-400">Connected:</span>
+                  <span className="ml-2 font-medium text-gray-900 dark:text-white">
                     {new Date(connection.connected_at).toLocaleDateString()}
                   </span>
                 </div>
                 {connection.last_sync_at && (
                   <div>
-                    <span className="text-gray-600">Last Sync:</span>
-                    <span className="ml-2 font-medium text-gray-900">
+                    <span className="text-gray-600 dark:text-gray-400">Last Sync:</span>
+                    <span className="ml-2 font-medium text-gray-900 dark:text-white">
                       {new Date(connection.last_sync_at).toLocaleString()}
                     </span>
                   </div>
@@ -223,7 +220,7 @@ export function StravaConnect() {
 
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 text-sm text-blue-800">
               <div className="flex items-start gap-2">
-                <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                <MapPin className="w-4 h-4 mt-0.5 shrink-0" />
                 <div>
                   <strong>GPS Route Import:</strong> Activities with GPS data will include
                   interactive maps showing your exact running route!
@@ -252,7 +249,7 @@ export function StravaConnect() {
 
               <button
                 onClick={handleDisconnect}
-                className="px-6 py-2 border border-gray-300 rounded-lg font-medium text-gray-700 hover:bg-gray-50 transition"
+                className="px-6 py-2 border border-gray-300 dark:border-gray-600 rounded-lg font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
               >
                 Disconnect
               </button>
@@ -271,13 +268,13 @@ export function StravaConnect() {
 
       {/* Activities List */}
       {activities.length > 0 && (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h4 className="text-lg font-semibold text-gray-900">
+              <h4 className="text-lg font-semibold text-gray-900 dark:text-white">
                 Strava Activities ({activities.length})
               </h4>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
                 {selectedActivities.size} selected •{' '}
                 {activities.filter((a) => a.map?.summary_polyline).length} with GPS routes
               </p>
@@ -285,13 +282,13 @@ export function StravaConnect() {
             <div className="flex gap-2">
               <button
                 onClick={handleSelectAll}
-                className="text-sm text-blue-600 hover:text-blue-700 font-medium px-3 py-1 rounded hover:bg-blue-50"
+                className="text-sm text-blue-600 hover:text-blue-700 font-medium px-3 py-1 rounded hover:bg-blue-50 dark:hover:bg-blue-900/20"
               >
                 Select All
               </button>
               <button
                 onClick={handleDeselectAll}
-                className="text-sm text-gray-600 hover:text-gray-700 font-medium px-3 py-1 rounded hover:bg-gray-100"
+                className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-700 font-medium px-3 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 Deselect All
               </button>
@@ -305,7 +302,7 @@ export function StravaConnect() {
                 className={`relative border-2 rounded-lg transition ${
                   selectedActivities.has(activity.id)
                     ? 'border-blue-500 bg-blue-50'
-                    : 'border-gray-200 bg-white'
+                    : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800'
                 }`}
               >
                 {/* Checkbox */}
@@ -320,7 +317,7 @@ export function StravaConnect() {
                     className={`w-6 h-6 border-2 rounded flex items-center justify-center transition ${
                       selectedActivities.has(activity.id)
                         ? 'bg-blue-600 border-blue-600'
-                        : 'bg-white border-gray-300 hover:border-blue-400'
+                        : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 hover:border-blue-400'
                     }`}
                   >
                     {selectedActivities.has(activity.id) && (
@@ -331,10 +328,10 @@ export function StravaConnect() {
 
                 {/* Activity Card */}
                 <div onClick={() => handleToggleActivity(activity.id)} className="cursor-pointer">
-                <StravaActivityCard 
-          activity={activity} 
-          selected={selectedActivities.has(activity.id)}  // <-- THIS IS THE LINE
-        />
+                  <StravaActivityCard
+                    activity={activity}
+                    selected={selectedActivities.has(activity.id)}
+                  />
                 </div>
               </div>
             ))}
@@ -342,7 +339,7 @@ export function StravaConnect() {
 
           {/* Import Button */}
           <div className="mt-6 flex items-center justify-between">
-            <div className="text-sm text-gray-600">
+            <div className="text-sm text-gray-600 dark:text-gray-400">
               {selectedActivities.size} of {activities.length} activities selected
             </div>
             <button

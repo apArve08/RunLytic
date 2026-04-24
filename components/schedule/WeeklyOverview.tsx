@@ -40,21 +40,21 @@ export function WeeklyOverview({ scheduledRuns, currentWeek }: WeeklyOverviewPro
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h3 className="text-lg font-semibold text-gray-900">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
             Week {currentWeek} Overview
           </h3>
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
             {format(weekStart, 'MMM d')} - {format(addDays(weekStart, 6), 'MMM d, yyyy')}
           </p>
         </div>
         <div className="text-right">
-          <div className="text-2xl font-bold text-gray-900">
+          <div className="text-2xl font-bold text-gray-900 dark:text-white">
             {totalWeekDistance.toFixed(1)} km
           </div>
-          <div className="text-sm text-gray-500">
+          <div className="text-sm text-gray-500 dark:text-gray-400">
             {completedRuns}/{weekRuns.length} completed
           </div>
         </div>
@@ -62,11 +62,11 @@ export function WeeklyOverview({ scheduledRuns, currentWeek }: WeeklyOverviewPro
 
       {/* Progress Bar */}
       <div className="mb-6">
-        <div className="flex justify-between text-sm text-gray-600 mb-2">
+        <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-2">
           <span>Progress</span>
           <span>{Math.round((completedRuns / (weekRuns.length || 1)) * 100)}%</span>
         </div>
-        <div className="w-full bg-gray-200 rounded-full h-3">
+        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
           <div
             className="bg-blue-600 h-3 rounded-full transition-all"
             style={{
@@ -87,14 +87,14 @@ export function WeeklyOverview({ scheduledRuns, currentWeek }: WeeklyOverviewPro
               key={day.toISOString()}
               className={`
                 text-center p-3 rounded-lg border
-                ${isToday ? 'border-blue-500 bg-blue-50' : 'border-gray-200'}
+                ${isToday ? 'border-blue-500 bg-blue-50' : 'border-gray-200 dark:border-gray-700'}
                 ${!run && 'opacity-50'}
               `}
             >
-              <div className={`text-xs font-medium mb-2 ${isToday ? 'text-blue-600' : 'text-gray-600'}`}>
+              <div className={`text-xs font-medium mb-2 ${isToday ? 'text-blue-600' : 'text-gray-600 dark:text-gray-400'}`}>
                 {format(day, 'EEE')}
               </div>
-              <div className="text-sm font-semibold text-gray-900 mb-2">
+              <div className="text-sm font-semibold text-gray-900 dark:text-white mb-2">
                 {format(day, 'd')}
               </div>
 
@@ -104,7 +104,7 @@ export function WeeklyOverview({ scheduledRuns, currentWeek }: WeeklyOverviewPro
                     {getRunTypeIcon(run.run_type)}
                   </div>
                   {run.target_distance && (
-                    <div className="text-xs font-medium text-gray-700">
+                    <div className="text-xs font-medium text-gray-700 dark:text-gray-300">
                       {run.target_distance} km
                     </div>
                   )}

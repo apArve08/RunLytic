@@ -50,11 +50,11 @@ export function RunCard({ run }: RunCardProps) {
   return (
     <Link
       href={`/runs/${run.id}`}
-      className="block bg-white rounded-lg shadow-sm hover:shadow-md transition border border-gray-200 p-5"
+      className="block bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition border border-gray-200 dark:border-gray-700 p-5"
     >
       <div className="flex justify-between items-start mb-3">
         <div>
-          <p className="text-sm text-gray-500 flex items-center gap-1">
+          <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1">
             <Calendar className="w-3 h-3" />
             {format(new Date(run.date), 'EEEE, MMM d, yyyy')}
           </p>
@@ -66,7 +66,7 @@ export function RunCard({ run }: RunCardProps) {
           )}
         </div>
         <div className="text-right">
-          <p className="text-2xl font-bold text-gray-900">
+          <p className="text-2xl font-bold text-gray-900 dark:text-white">
             {formatDistance(run.distance)}
           </p>
         </div>
@@ -87,16 +87,16 @@ export function RunCard({ run }: RunCardProps) {
       <div className="grid grid-cols-2 gap-4 mb-3">
         <div className="flex items-center gap-2 text-sm">
           <Clock className="w-4 h-4 text-gray-400" />
-          <span className="text-gray-600">{formatDuration(run.duration)}</span>
+          <span className="text-gray-600 dark:text-gray-400">{formatDuration(run.duration)}</span>
         </div>
         <div className="flex items-center gap-2 text-sm">
           <TrendingUp className="w-4 h-4 text-gray-400" />
-          <span className="text-gray-600">{formatPace(run.pace)} /km</span>
+          <span className="text-gray-600 dark:text-gray-400">{formatPace(run.pace)} /km</span>
         </div>
       </div>
 
       {run.notes && (
-        <p className="text-sm text-gray-600 line-clamp-2 mb-3">{run.notes}</p>
+        <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 mb-3">{run.notes}</p>
       )}
 
       {run.ai_analysis ? (

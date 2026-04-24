@@ -43,13 +43,13 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
-      <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8">
+      <div className="max-w-md w-full bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
         <div className="flex items-center justify-center gap-2 mb-8">
           <Footprints className="w-8 h-8 text-blue-600" />
-          <h1 className="text-3xl font-bold text-gray-900">RunTrack</h1>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">RunTrack</h1>
         </div>
 
-        <h2 className="text-2xl font-semibold text-center mb-6">Welcome back</h2>
+        <h2 className="text-2xl font-semibold text-center mb-6 text-gray-900 dark:text-white">Welcome back</h2>
 
         {error && (
           <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">
@@ -60,7 +60,7 @@ export default function LoginPage() {
         <form onSubmit={handleLogin} className="space-y-4">
           {/* Email */}
           <div>
-            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               <Mail className="w-4 h-4" />
               Email
             </label>
@@ -68,7 +68,7 @@ export default function LoginPage() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
               placeholder="you@example.com"
               required
             />
@@ -76,7 +76,7 @@ export default function LoginPage() {
 
           {/* Password */}
           <div>
-            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               <Lock className="w-4 h-4" />
               Password
             </label>
@@ -85,14 +85,14 @@ export default function LoginPage() {
                 type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-12"
+                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-12 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
                 placeholder="••••••••"
                 required
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
               >
                 {showPassword ? (
                   <EyeOff className="w-5 h-5" />
@@ -112,7 +112,7 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <p className="text-center text-gray-600 mt-6">
+        <p className="text-center text-gray-600 dark:text-gray-400 mt-6">
           Don't have an account?{' '}
           <Link href="/signup" className="text-blue-600 hover:text-blue-700 font-medium">
             Sign up
@@ -120,14 +120,14 @@ export default function LoginPage() {
         </p>
 
         {/* Development Helper */}
-        <div className="mt-6 pt-6 border-t border-gray-200">
-          <p className="text-xs text-gray-500 text-center mb-3">
+        <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+          <p className="text-xs text-gray-500 dark:text-gray-400 text-center mb-3">
             💡 <strong>Quick Test:</strong>
           </p>
           <button
             type="button"
             onClick={quickFillDemo}
-            className="w-full text-sm bg-gray-100 text-gray-700 py-2 rounded-lg hover:bg-gray-200 transition"
+            className="w-full text-sm bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition"
           >
             Fill demo credentials (demo@demo.com)
           </button>

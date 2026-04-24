@@ -66,14 +66,14 @@ export default function RecordsPage() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Personal Records</h1>
-        <p className="text-gray-600 mt-1">Your best performances across all distances</p>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Personal Records</h1>
+        <p className="text-gray-600 dark:text-gray-400 mt-1">Your best performances across all distances</p>
       </div>
 
       {records.length === 0 ? (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-12 text-center">
           <Trophy className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-          <p className="text-gray-500 mb-2">No personal records yet</p>
+          <p className="text-gray-500 dark:text-gray-400 mb-2">No personal records yet</p>
           <p className="text-sm text-gray-400">
             Keep running to set your first PRs!
           </p>
@@ -90,7 +90,7 @@ export default function RecordsPage() {
                 <Trophy className="w-6 h-6 text-yellow-600" />
               </div>
 
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                 {getRecordLabel(record.record_type)}
               </h3>
 
@@ -109,7 +109,7 @@ export default function RecordsPage() {
                 </div>
               )}
 
-              <div className="flex items-center gap-2 text-sm text-gray-600 mb-3">
+              <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 mb-3">
                 <Calendar className="w-4 h-4" />
                 <span>
                   {new Date(record.achieved_at).toLocaleDateString('en-US', {

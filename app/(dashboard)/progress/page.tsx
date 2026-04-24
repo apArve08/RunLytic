@@ -61,7 +61,7 @@ export default function ProgressPage() {
       case 'declining':
         return <TrendingDown className="w-4 h-4 text-red-600" />
       default:
-        return <Minus className="w-4 h-4 text-gray-600" />
+        return <Minus className="w-4 h-4 text-gray-600 dark:text-gray-400" />
     }
   }
 
@@ -69,7 +69,7 @@ export default function ProgressPage() {
     const badges = {
       improving: 'bg-green-100 text-green-700 border-green-200',
       declining: 'bg-red-100 text-red-700 border-red-200',
-      stable: 'bg-gray-100 text-gray-700 border-gray-200',
+      stable: 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-600',
     }
     return badges[trend as keyof typeof badges] || badges.stable
   }
@@ -78,8 +78,8 @@ export default function ProgressPage() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Progress Tracking</h1>
-        <p className="text-gray-600 mt-1">AI-powered insights on your running performance</p>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Progress Tracking</h1>
+        <p className="text-gray-600 dark:text-gray-400 mt-1">AI-powered insights on your running performance</p>
       </div>
 
       {/* Main Analysis */}
@@ -88,15 +88,15 @@ export default function ProgressPage() {
 
       {/* Past Reports */}
       {pastReports.length > 0 && (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
             Past Reports ({pastReports.length})
           </h3>
           <div className="space-y-3">
             {pastReports.map(report => (
               <div
                 key={report.id}
-                className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition group"
+                className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition group"
               >
                 <div className="flex items-center gap-4 flex-1">
                   {/* Icon */}
@@ -107,7 +107,7 @@ export default function ProgressPage() {
                   {/* Info */}
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-1">
-                      <div className="font-medium text-gray-900 capitalize">
+                      <div className="font-medium text-gray-900 dark:text-white capitalize">
                         {report.report_type} Report
                       </div>
                       {report.key_insights?.trend && (
@@ -117,7 +117,7 @@ export default function ProgressPage() {
                         </div>
                       )}
                     </div>
-                    <div className="text-sm text-gray-500 flex items-center gap-1">
+                    <div className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1">
                       <Calendar className="w-3 h-3" />
                       {format(new Date(report.report_date), 'MMMM d, yyyy')} •{' '}
                       {format(new Date(report.created_at), 'h:mm a')}
@@ -166,6 +166,6 @@ export default function ProgressPage() {
   <CompareReports reports={pastReports} />
 )}
     </div>
-    
+
   )
 }

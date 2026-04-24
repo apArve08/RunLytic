@@ -4,7 +4,7 @@
 import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { ChevronLeft, Calendar, Clock, TrendingUp, Footprints, Sparkles, Trash2, RefreshCw, Mountain, Heart, Zap, Map, Activity } from 'lucide-react'
+import { ChevronLeft, Calendar, Clock, TrendingUp, Footprints, Sparkles, Trash2, RefreshCw, Mountain, Heart, Zap, Map, Activity, TrendingDown } from 'lucide-react'
 import { formatPace, formatDuration, formatDistance } from '@/lib/utils'
 import { format } from 'date-fns'
 import { Run } from '@/types/database'
@@ -56,7 +56,7 @@ export default function RunDetailPage() {
       })
 
       const data = await response.json()
-      
+
       if (data.analysis) {
         setRun({ ...run, ai_analysis: data.analysis })
       }
@@ -87,7 +87,7 @@ export default function RunDetailPage() {
     return (
       <div className="max-w-4xl mx-auto py-12 text-center">
         <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto" />
-        <p className="text-gray-500 mt-4">Loading run...</p>
+        <p className="text-gray-500 dark:text-gray-400 mt-4">Loading run...</p>
       </div>
     )
   }
@@ -95,7 +95,7 @@ export default function RunDetailPage() {
   if (!run) {
     return (
       <div className="max-w-4xl mx-auto py-12 text-center">
-        <p className="text-gray-500">Run not found</p>
+        <p className="text-gray-500 dark:text-gray-400">Run not found</p>
         <Link href="/runs" className="text-blue-600 hover:text-blue-700 mt-4 inline-block">
           ← Back to runs
         </Link>
@@ -108,20 +108,20 @@ export default function RunDetailPage() {
       {/* Back Button */}
       <Link
         href="/runs"
-        className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 transition"
+        className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition"
       >
         <ChevronLeft className="w-4 h-4" />
         Back to runs
       </Link>
 
       {/* Header & Primary Stats */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
         <div className="flex justify-between items-start mb-6">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
               {formatDistance(run.distance)}
             </h1>
-            <p className="text-gray-600 flex items-center gap-2">
+            <p className="text-gray-600 dark:text-gray-400 flex items-center gap-2">
               <Calendar className="w-4 h-4" />
               {format(new Date(run.date), 'EEEE, MMMM d, yyyy')}
             </p>
@@ -137,35 +137,50 @@ export default function RunDetailPage() {
 
         {/* Primary Stats Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          <div className="bg-gray-50 rounded-lg p-4">
-            <div className="flex items-center gap-2 text-gray-600 mb-2">
+          <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+            <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 mb-2">
               <Clock className="w-4 h-4" />
               <span className="text-sm font-medium">Duration</span>
             </div>
-            <p className="text-2xl font-bold text-gray-900">
+            <p className="text-2xl font-bold text-gray-900 dark:text-white">
               {formatDuration(run.duration)}
             </p>
           </div>
 
-          <div className="bg-gray-50 rounded-lg p-4">
-            <div className="flex items-center gap-2 text-gray-600 mb-2">
+          <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+            <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 mb-2">
               <TrendingUp className="w-4 h-4" />
               <span className="text-sm font-medium">Pace</span>
             </div>
-            <p className="text-2xl font-bold text-gray-900">
+            <p className="text-2xl font-bold text-gray-900 dark:text-white">
               {formatPace(run.pace)}
-              <span className="text-sm text-gray-600 ml-1">/km</span>
+              <span className="text-sm text-gray-600 dark:text-gray-400 ml-1">/km</span>
             </p>
           </div>
 
           {run.shoes && (
-            <div className="bg-gray-50 rounded-lg p-4 col-span-2 md:col-span-1">
-              <div className="flex items-center gap-2 text-gray-600 mb-2">
+            <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 col-span-2 md:col-span-1">
+              <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 mb-2">
                 <Footprints className="w-4 h-4" />
                 <span className="text-sm font-medium">Shoes</span>
               </div>
-              <p className="text-lg font-semibold text-gray-900">
+              <p className="text-lg font-semibold text-gray-900 dark:text-white">
                 {run.shoes.nickname || `${run.shoes.brand} ${run.shoes.model}`}
+              </p>
+            </div>
+          )}
+
+          {run.shoes?.purchase_price != null && run.shoes.total_distance > 0 && (
+            <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4 col-span-2 md:col-span-1">
+              <div className="flex items-center gap-2 text-green-600 dark:text-green-400 mb-2">
+                <TrendingDown className="w-4 h-4" />
+                <span className="text-sm font-medium">Cost / km</span>
+              </div>
+              <p className="text-2xl font-bold text-green-700 dark:text-green-400">
+                RM {(run.shoes.purchase_price / run.shoes.total_distance).toFixed(2)}
+              </p>
+              <p className="text-xs text-green-600 dark:text-green-500 mt-1">
+                {run.shoes.total_distance.toFixed(0)} km on shoes
               </p>
             </div>
           )}
@@ -174,8 +189,8 @@ export default function RunDetailPage() {
 
       {/* Enhanced Stats */}
       {(run.avg_heart_rate || run.elevation_gain || run.avg_speed) && (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Additional Metrics</h2>
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Additional Metrics</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {run.avg_heart_rate && (
               <div className="bg-red-50 rounded-lg p-4">
@@ -237,9 +252,9 @@ export default function RunDetailPage() {
 
       {/* Notes */}
       {run.notes && (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-3">Notes</h2>
-          <p className="text-gray-700 whitespace-pre-wrap">{run.notes}</p>
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Notes</h2>
+          <p className="text-gray-700 dark:text-gray-300 whitespace-pre-wrap">{run.notes}</p>
         </div>
       )}
 
@@ -249,7 +264,7 @@ export default function RunDetailPage() {
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-blue-600" />
-              <h2 className="text-lg font-semibold text-gray-900">AI Analysis</h2>
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-white">AI Analysis</h2>
             </div>
             <button
               onClick={handleAnalyze}
@@ -260,17 +275,17 @@ export default function RunDetailPage() {
               Re-analyze
             </button>
           </div>
-          <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">
+          <p className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-wrap">
             {run.ai_analysis}
           </p>
         </div>
       ) : (
         <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg border border-blue-200 p-8 text-center">
           <Sparkles className="w-12 h-12 text-blue-400 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
             Get AI-Powered Insights
           </h3>
-          <p className="text-gray-600 mb-6">
+          <p className="text-gray-600 dark:text-gray-400 mb-6">
             Let AI analyze your performance and provide personalized feedback
           </p>
           <button
@@ -296,11 +311,11 @@ export default function RunDetailPage() {
 
     {/* Route & Elevation Section */}
     {run.route_data && run.route_data.length > 0 && (
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <Map className="w-5 h-5 text-blue-600" />
-            <h2 className="text-lg font-semibold text-gray-900">Route & Terrain</h2>
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Route & Terrain</h2>
           </div>
           {run.notes?.includes('Imported from Strava') && (
             <div className="flex items-center gap-2 text-sm text-orange-600 bg-orange-50 px-3 py-1 rounded-full">
@@ -309,7 +324,7 @@ export default function RunDetailPage() {
             </div>
           )}
         </div>
-        
+
         {/* Main Map */}
         <div className="mb-6">
           <RouteMap route={run.route_data} height="500px" showMarkers={true} />
@@ -317,48 +332,48 @@ export default function RunDetailPage() {
 
         {/* Elevation Profile Insertion */}
         {run.route_data.some(p => p.elevation) && (
-          <div className="mb-6 border-t pt-6">
+          <div className="mb-6 border-t border-gray-200 dark:border-gray-700 pt-6">
             <div className="flex items-center gap-2 mb-4">
               <Mountain className="w-4 h-4 text-green-600" />
-              <h3 className="text-sm font-semibold text-gray-700 uppercase tracking-wider">Elevation Profile</h3>
+              <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">Elevation Profile</h3>
             </div>
             <ElevationProfile route={run.route_data} />
           </div>
         )}
-        
+
         <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-          <div className="bg-gray-50 rounded-lg p-3">
-            <div className="text-gray-600 mb-1">GPS Points</div>
-            <div className="font-semibold text-gray-900">{run.route_data.length}</div>
+          <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3">
+            <div className="text-gray-600 dark:text-gray-400 mb-1">GPS Points</div>
+            <div className="font-semibold text-gray-900 dark:text-white">{run.route_data.length}</div>
           </div>
-          
-          <div className="bg-gray-50 rounded-lg p-3">
-            <div className="text-gray-600 mb-1">Start</div>
-            <div className="font-mono text-xs text-gray-900">
+
+          <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3">
+            <div className="text-gray-600 dark:text-gray-400 mb-1">Start</div>
+            <div className="font-mono text-xs text-gray-900 dark:text-white">
               {run.route_data[0].lat.toFixed(4)}, {run.route_data[0].lng.toFixed(4)}
             </div>
           </div>
-          
-          <div className="bg-gray-50 rounded-lg p-3">
-            <div className="text-gray-600 mb-1">Finish</div>
-            <div className="font-mono text-xs text-gray-900">
+
+          <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3">
+            <div className="text-gray-600 dark:text-gray-400 mb-1">Finish</div>
+            <div className="font-mono text-xs text-gray-900 dark:text-white">
               {run.route_data[run.route_data.length - 1].lat.toFixed(4)},{' '}
               {run.route_data[run.route_data.length - 1].lng.toFixed(4)}
             </div>
           </div>
-          
+
           {run.elevation_gain && (
-            <div className="bg-gray-50 rounded-lg p-3">
-              <div className="text-gray-600 mb-1">Total Climb</div>
-              <div className="font-semibold text-gray-900">{run.elevation_gain}m</div>
+            <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3">
+              <div className="text-gray-600 dark:text-gray-400 mb-1">Total Climb</div>
+              <div className="font-semibold text-gray-900 dark:text-white">{run.elevation_gain}m</div>
             </div>
           )}
         </div>
       </div>
-      
+
     )}
-   
+
     </div>
-    
+
   )
 }

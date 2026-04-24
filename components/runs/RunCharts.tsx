@@ -15,7 +15,7 @@ export function RunCharts({ data }: { data: any[] }) {
     <div className="space-y-8">
       {/* Elevation Profile */}
       <div className="h-48 w-full">
-        <p className="text-xs font-medium text-gray-500 mb-2 uppercase">Elevation Profile (m)</p>
+        <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2 uppercase">Elevation Profile (m)</p>
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={chartData}>
             <defs>
@@ -27,7 +27,7 @@ export function RunCharts({ data }: { data: any[] }) {
             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
             <XAxis dataKey="name" hide />
             <YAxis hide domain={['dataMin - 5', 'dataMax + 5']} />
-            <Tooltip 
+            <Tooltip
               labelStyle={{ display: 'none' }}
               contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
             />
@@ -39,13 +39,13 @@ export function RunCharts({ data }: { data: any[] }) {
       {/* Heart Rate Chart */}
       {chartData[0].heartRate && (
         <div className="h-48 w-full">
-          <p className="text-xs font-medium text-gray-500 mb-2 uppercase">Heart Rate (bpm)</p>
+          <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2 uppercase">Heart Rate (bpm)</p>
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={chartData}>
               <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
               <XAxis dataKey="name" hide />
               <YAxis hide domain={['dataMin - 10', 'dataMax + 10']} />
-              <Tooltip 
+              <Tooltip
                 labelStyle={{ display: 'none' }}
                 contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
               />

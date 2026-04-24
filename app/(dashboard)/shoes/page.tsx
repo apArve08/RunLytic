@@ -4,7 +4,7 @@
 import { useEffect, useState } from 'react'
 import { Shoe } from '@/types/database'
 import { ShoeForm } from '@/components/forms/ShoeForm'
-import { Drill ,Plus, Trash2, Calendar } from 'lucide-react'
+import { Drill, Plus, Trash2, Calendar, TrendingDown } from 'lucide-react'
 import { format } from 'date-fns'
 
 export default function ShoesPage() {
@@ -44,8 +44,8 @@ export default function ShoesPage() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Shoes</h1>
-          <p className="text-gray-600 mt-1">Track your running shoe mileage</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Shoes</h1>
+          <p className="text-gray-600 dark:text-gray-400 mt-1">Track your running shoe mileage</p>
         </div>
         <button
           onClick={() => setShowForm(!showForm)}
@@ -58,8 +58,8 @@ export default function ShoesPage() {
 
       {/* Add Shoe Form */}
       {showForm && (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Add New Shoe</h2>
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Add New Shoe</h2>
           <ShoeForm />
         </div>
       )}
@@ -67,14 +67,14 @@ export default function ShoesPage() {
       {/* Shoes Grid */}
       {loading ? (
         <div className="text-center py-12">
-          <p className="text-gray-500">Loading shoes...</p>
+          <p className="text-gray-500 dark:text-gray-400">Loading shoes...</p>
         </div>
       ) : shoes.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {shoes.map((shoe) => (
             <div
               key={shoe.id}
-              className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition"
+              className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md transition"
             >
               <div className="flex justify-between items-start mb-4">
                 <div className="flex items-center gap-3">
@@ -82,10 +82,10 @@ export default function ShoesPage() {
                     <Drill className="w-6 h-6 text-blue-600" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900">
+                    <h3 className="font-semibold text-gray-900 dark:text-white">
                       {shoe.nickname || shoe.model}
                     </h3>
-                    <p className="text-sm text-gray-500">{shoe.brand}</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">{shoe.brand}</p>
                   </div>
                 </div>
                 <button
@@ -98,20 +98,45 @@ export default function ShoesPage() {
 
               <div className="space-y-2">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">Total Distance</span>
-                  <span className="font-semibold text-gray-900">
+                  <span className="text-sm text-gray-600 dark:text-gray-400">Total Distance</span>
+                  <span className="font-semibold text-gray-900 dark:text-white">
                     {shoe.total_distance.toFixed(1)} km
                   </span>
                 </div>
 
                 {shoe.purchase_date && (
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600 flex items-center gap-1">
+                    <span className="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-1">
                       <Calendar className="w-3 h-3" />
                       Purchased
                     </span>
-                    <span className="text-sm text-gray-700">
+                    <span className="text-sm text-gray-700 dark:text-gray-300">
                       {format(new Date(shoe.purchase_date), 'MMM d, yyyy')}
+                    </span>
+                  </div>
+                )}
+
+                {/* Cost per km */}
+                {shoe.purchase_price != null && shoe.total_distance > 0 && (
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-1">
+                      <TrendingDown className="w-3 h-3" />
+                      Cost / km
+                    </span>
+                    <span className="font-semibold text-green-600 dark:text-green-400">
+                      RM {(shoe.purchase_price / shoe.total_distance).toFixed(2)}
+                    </span>
+                  </div>
+                )}
+
+                {shoe.purchase_price != null && shoe.total_distance === 0 && (
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-1">
+                      <TrendingDown className="w-3 h-3" />
+                      Purchase Price
+                    </span>
+                    <span className="text-sm text-gray-700 dark:text-gray-300">
+                      RM {shoe.purchase_price.toFixed(2)}
                     </span>
                   </div>
                 )}
@@ -129,9 +154,9 @@ export default function ShoesPage() {
           ))}
         </div>
       ) : (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-12 text-center">
           <Drill className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-          <p className="text-gray-500 mb-4">No shoes added yet</p>
+          <p className="text-gray-500 dark:text-gray-400 mb-4">No shoes added yet</p>
           <button
             onClick={() => setShowForm(true)}
             className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition"

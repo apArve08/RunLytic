@@ -14,7 +14,7 @@ export function MonthlyCalendar({ runs, month }: MonthlyCalendarProps) {
   const monthEnd = endOfMonth(month)
   const calendarStart = startOfWeek(monthStart, { weekStartsOn: 1 })
   const calendarEnd = endOfWeek(monthEnd, { weekStartsOn: 1 })
-  
+
   const days = eachDayOfInterval({ start: calendarStart, end: calendarEnd })
   const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 
@@ -23,15 +23,15 @@ export function MonthlyCalendar({ runs, month }: MonthlyCalendarProps) {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-      <h3 className="text-lg font-semibold text-gray-900 mb-4">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
         {format(month, 'MMMM yyyy')}
       </h3>
 
       {/* Week day headers */}
       <div className="grid grid-cols-7 gap-2 mb-2">
         {weekDays.map(day => (
-          <div key={day} className="text-center text-xs font-medium text-gray-500 py-2">
+          <div key={day} className="text-center text-xs font-medium text-gray-500 dark:text-gray-400 py-2">
             {day}
           </div>
         ))}
@@ -49,17 +49,17 @@ export function MonthlyCalendar({ runs, month }: MonthlyCalendarProps) {
               key={day.toISOString()}
               className={`
                 min-h-[80px] p-2 border rounded-lg
-                ${isCurrentMonth ? 'bg-white' : 'bg-gray-50'}
-                ${dayRuns.length > 0 ? 'border-blue-200 bg-blue-50' : 'border-gray-200'}
+                ${isCurrentMonth ? 'bg-white dark:bg-gray-800' : 'bg-gray-50 dark:bg-gray-900'}
+                ${dayRuns.length > 0 ? 'border-blue-200 bg-blue-50' : 'border-gray-200 dark:border-gray-700'}
               `}
             >
               <div className={`
                 text-sm font-medium mb-1
-                ${isCurrentMonth ? 'text-gray-900' : 'text-gray-400'}
+                ${isCurrentMonth ? 'text-gray-900 dark:text-white' : 'text-gray-400'}
               `}>
                 {format(day, 'd')}
               </div>
-              
+
               {dayRuns.length > 0 && (
                 <div className="space-y-1">
                   <div className="text-xs font-semibold text-blue-700">

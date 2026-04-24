@@ -34,8 +34,6 @@ export function UpcomingRuns({ scheduledRuns, onUpdate }: UpcomingRunsProps) {
   const handleMarkComplete = async (run: ScheduledRun) => {
     setCompletingRun(run.id)
     try {
-      // For now, just mark as complete
-      // In a full implementation, you'd create an actual run and link it
       await fetch(`/api/scheduled-runs?id=${run.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
@@ -50,7 +48,6 @@ export function UpcomingRuns({ scheduledRuns, onUpdate }: UpcomingRunsProps) {
   }
 
   const handleLogRun = (run: ScheduledRun) => {
-    // Pre-fill the run form with scheduled data
     const params = new URLSearchParams({
       date: run.scheduled_date,
       distance: run.target_distance?.toString() || '',
@@ -75,7 +72,7 @@ export function UpcomingRuns({ scheduledRuns, onUpdate }: UpcomingRunsProps) {
     <div
       className={`
         p-4 rounded-lg border-2 transition
-        ${isToday ? 'border-blue-500 bg-blue-50' : 'border-gray-200 bg-white'}
+        ${isToday ? 'border-blue-500 bg-blue-50' : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800'}
         ${isOverdue ? 'border-red-300 bg-red-50' : ''}
       `}
     >
@@ -99,7 +96,7 @@ export function UpcomingRuns({ scheduledRuns, onUpdate }: UpcomingRunsProps) {
           onClick={() => handleMarkComplete(run)}
           disabled={completingRun === run.id || run.completed}
           className={`
-            p-1 rounded hover:bg-gray-100 transition
+            p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition
             ${run.completed ? 'text-green-600' : 'text-gray-400'}
           `}
         >
@@ -112,20 +109,20 @@ export function UpcomingRuns({ scheduledRuns, onUpdate }: UpcomingRunsProps) {
       </div>
 
       <div className="space-y-2">
-        <div className="flex items-center gap-2 text-sm text-gray-600">
+        <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
           <Calendar className="w-4 h-4" />
           {format(new Date(run.scheduled_date), 'EEEE, MMM d')}
         </div>
 
         {run.target_distance && (
-          <div className="flex items-center gap-2 text-sm text-gray-600">
+          <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
             <Footprints className="w-4 h-4" />
             {run.target_distance} km
           </div>
         )}
 
         {run.notes && (
-          <p className="text-sm text-gray-600 mt-2">{run.notes}</p>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">{run.notes}</p>
         )}
       </div>
 
@@ -145,7 +142,7 @@ export function UpcomingRuns({ scheduledRuns, onUpdate }: UpcomingRunsProps) {
       {/* Today's Runs */}
       {todaysRuns.length > 0 && (
         <div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-3 flex items-center gap-2">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
             <Calendar className="w-5 h-5 text-blue-600" />
             Today's Workout
           </h3>
@@ -160,7 +157,7 @@ export function UpcomingRuns({ scheduledRuns, onUpdate }: UpcomingRunsProps) {
       {/* Overdue Runs */}
       {overdueRuns.length > 0 && (
         <div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-3 flex items-center gap-2">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
             <Clock className="w-5 h-5 text-red-600" />
             Missed Workouts
           </h3>
@@ -170,7 +167,7 @@ export function UpcomingRuns({ scheduledRuns, onUpdate }: UpcomingRunsProps) {
             ))}
           </div>
           {overdueRuns.length > 3 && (
-            <p className="text-sm text-gray-500 mt-2">
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
               + {overdueRuns.length - 3} more missed
             </p>
           )}
@@ -180,7 +177,7 @@ export function UpcomingRuns({ scheduledRuns, onUpdate }: UpcomingRunsProps) {
       {/* Upcoming Runs */}
       {upcomingRuns.length > 0 && (
         <div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-3">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
             Next 7 Days
           </h3>
           <div className="space-y-3">
@@ -194,9 +191,9 @@ export function UpcomingRuns({ scheduledRuns, onUpdate }: UpcomingRunsProps) {
       {todaysRuns.length === 0 &&
         upcomingRuns.length === 0 &&
         overdueRuns.length === 0 && (
-          <div className="text-center py-12 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
+          <div className="text-center py-12 bg-gray-50 dark:bg-gray-900 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-700">
             <Calendar className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-            <p className="text-gray-500">No scheduled runs yet</p>
+            <p className="text-gray-500 dark:text-gray-400">No scheduled runs yet</p>
             <p className="text-sm text-gray-400 mt-1">
               Generate a training schedule to get started!
             </p>

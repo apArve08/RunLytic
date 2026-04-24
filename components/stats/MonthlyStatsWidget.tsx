@@ -22,10 +22,10 @@ interface MonthlyStatsWidgetProps {
   userName?: string
 }
 
-export function MonthlyStatsWidget({ 
-  data, 
-  month, 
-  userName = 'Runner' 
+export function MonthlyStatsWidget({
+  data,
+  month,
+  userName = 'Runner'
 }: MonthlyStatsWidgetProps) {
   const widgetRef = useRef<HTMLDivElement>(null)
 
@@ -158,14 +158,14 @@ export function MonthlyStatsWidget({
         {/* Achievement Banner */}
         <div className="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl p-6 text-center">
           <div className="text-2xl font-bold text-gray-900 mb-2">
-            {data.distance > 100 
-              ? '🏆 Century Club!' 
-              : data.distance > 50 
-              ? '⭐ Strong Month!' 
+            {data.distance > 100
+              ? '🏆 Century Club!'
+              : data.distance > 50
+              ? '⭐ Strong Month!'
               : '💪 Keep Going!'}
           </div>
           <div className="text-sm text-gray-800">
-            {data.distance > 100 
+            {data.distance > 100
               ? `You crushed ${data.distance.toFixed(0)}km this month!`
               : data.distance > 50
               ? `${data.distance.toFixed(0)}km and counting!`

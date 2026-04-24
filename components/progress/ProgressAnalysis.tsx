@@ -62,7 +62,7 @@ export function ProgressAnalysis({ onGenerate }: ProgressAnalysisProps) {
 
   const getTrendIcon = () => {
     if (!report?.key_insights?.trend) return <Minus className="w-5 h-5" />
-    
+
     switch (report.key_insights.trend) {
       case 'improving':
         return <TrendingUp className="w-5 h-5 text-green-600" />
@@ -75,7 +75,7 @@ export function ProgressAnalysis({ onGenerate }: ProgressAnalysisProps) {
 
   const getTrendColor = () => {
     if (!report?.key_insights?.trend) return 'gray'
-    
+
     switch (report.key_insights.trend) {
       case 'improving':
         return 'green'
@@ -108,13 +108,13 @@ export function ProgressAnalysis({ onGenerate }: ProgressAnalysisProps) {
           </p>
 
           <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Analyze last
             </label>
             <select
               value={months}
               onChange={(e) => setMonths(parseInt(e.target.value))}
-              className="px-4 py-2 border border-gray-300 rounded-lg"
+              className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
             >
               <option value={1}>1 month</option>
               <option value={2}>2 months</option>
@@ -150,7 +150,7 @@ export function ProgressAnalysis({ onGenerate }: ProgressAnalysisProps) {
           {/* Trend Summary */}
           <div className={`bg-${getTrendColor()}-50 border border-${getTrendColor()}-200 rounded-lg p-6`}>
             <div className="flex items-start gap-4">
-              <div className={`w-12 h-12 bg-${getTrendColor()}-100 rounded-full flex items-center justify-center flex-shrink-0`}>
+              <div className={`w-12 h-12 bg-${getTrendColor()}-100 rounded-full flex items-center justify-center shrink-0`}>
                 {getTrendIcon()}
               </div>
               <div>
@@ -167,37 +167,37 @@ export function ProgressAnalysis({ onGenerate }: ProgressAnalysisProps) {
           {/* Stats Overview */}
           {stats && (
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-                <div className="text-2xl font-bold text-gray-900">{stats.totalDistance}</div>
-                <div className="text-xs text-gray-500 mt-1">Total km</div>
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
+                <div className="text-2xl font-bold text-gray-900 dark:text-white">{stats.totalDistance}</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">Total km</div>
               </div>
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-                <div className="text-2xl font-bold text-gray-900">{stats.totalRuns}</div>
-                <div className="text-xs text-gray-500 mt-1">Total Runs</div>
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
+                <div className="text-2xl font-bold text-gray-900 dark:text-white">{stats.totalRuns}</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">Total Runs</div>
               </div>
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-                <div className="text-2xl font-bold text-gray-900">{stats.avgDistance}</div>
-                <div className="text-xs text-gray-500 mt-1">Avg km/Run</div>
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
+                <div className="text-2xl font-bold text-gray-900 dark:text-white">{stats.avgDistance}</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">Avg km/Run</div>
               </div>
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-                <div className="text-2xl font-bold text-gray-900">{stats.avgPace}</div>
-                <div className="text-xs text-gray-500 mt-1">Avg Pace</div>
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
+                <div className="text-2xl font-bold text-gray-900 dark:text-white">{stats.avgPace}</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">Avg Pace</div>
               </div>
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-                <div className="text-2xl font-bold text-gray-900">{stats.bestPace}</div>
-                <div className="text-xs text-gray-500 mt-1">Best Pace</div>
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
+                <div className="text-2xl font-bold text-gray-900 dark:text-white">{stats.bestPace}</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">Best Pace</div>
               </div>
             </div>
           )}
 
           {/* Trend Charts */}
           {chartData.length > 0 && (
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Monthly Trends</h3>
-              
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Monthly Trends</h3>
+
               {/* Distance Chart */}
               <div className="mb-8">
-                <h4 className="text-sm font-medium text-gray-700 mb-3">Distance (km)</h4>
+                <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Distance (km)</h4>
                 <ResponsiveContainer width="100%" height={200}>
                   <LineChart data={chartData}>
                     <CartesianGrid strokeDasharray="3 3" />
@@ -211,7 +211,7 @@ export function ProgressAnalysis({ onGenerate }: ProgressAnalysisProps) {
 
               {/* Pace Chart */}
               <div>
-                <h4 className="text-sm font-medium text-gray-700 mb-3">Average Pace (min/km)</h4>
+                <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Average Pace (min/km)</h4>
                 <ResponsiveContainer width="100%" height={200}>
                   <LineChart data={chartData}>
                     <CartesianGrid strokeDasharray="3 3" />

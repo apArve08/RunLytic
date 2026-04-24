@@ -57,19 +57,19 @@ export function AnnualStats() {
     <div className="space-y-6">
       {/* Year Selector */}
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-gray-900">{year} Year in Review</h2>
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{year} Year in Review</h2>
         <div className="flex items-center gap-2">
           <button
             onClick={handlePrevYear}
-            className="p-2 hover:bg-gray-100 rounded-lg transition"
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
-          <span className="px-4 py-2 font-medium text-gray-700">{year}</span>
+          <span className="px-4 py-2 font-medium text-gray-700 dark:text-gray-300">{year}</span>
           <button
             onClick={handleNextYear}
             disabled={year >= new Date().getFullYear()}
-            className="p-2 hover:bg-gray-100 rounded-lg transition disabled:opacity-50"
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition disabled:opacity-50"
           >
             <ChevronRight className="w-5 h-5" />
           </button>
@@ -119,32 +119,32 @@ export function AnnualStats() {
 
       {/* Achievement Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white border border-gray-200 rounded-lg p-4">
-          <div className="text-sm text-gray-600 mb-1">Longest Run</div>
-          <div className="text-2xl font-bold text-gray-900">{stats.longestRun} km</div>
+        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+          <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Longest Run</div>
+          <div className="text-2xl font-bold text-gray-900 dark:text-white">{stats.longestRun} km</div>
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-lg p-4">
-          <div className="text-sm text-gray-600 mb-1">Fastest Pace</div>
-          <div className="text-2xl font-bold text-gray-900">
+        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+          <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Fastest Pace</div>
+          <div className="text-2xl font-bold text-gray-900 dark:text-white">
             {stats.fastestPace ? formatPace(stats.fastestPace) : '--:--'}
           </div>
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-lg p-4">
-          <div className="text-sm text-gray-600 mb-1">Longest Streak</div>
-          <div className="text-2xl font-bold text-gray-900">{stats.maxStreak} days</div>
+        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+          <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Longest Streak</div>
+          <div className="text-2xl font-bold text-gray-900 dark:text-white">{stats.maxStreak} days</div>
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-lg p-4">
-          <div className="text-sm text-gray-600 mb-1">Favorite Day</div>
-          <div className="text-xl font-bold text-gray-900">{stats.mostActiveDay}</div>
+        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+          <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Favorite Day</div>
+          <div className="text-xl font-bold text-gray-900 dark:text-white">{stats.mostActiveDay}</div>
         </div>
       </div>
 
       {/* Monthly Distance Chart */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Monthly Distance</h3>
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Monthly Distance</h3>
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={monthlyData}>
             <CartesianGrid strokeDasharray="3 3" />
@@ -157,8 +157,8 @@ export function AnnualStats() {
       </div>
 
       {/* Monthly Pace Trend */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Average Pace Trend</h3>
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Average Pace Trend</h3>
         <ResponsiveContainer width="100%" height={250}>
           <LineChart data={monthlyData}>
             <CartesianGrid strokeDasharray="3 3" />

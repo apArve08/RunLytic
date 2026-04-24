@@ -62,10 +62,10 @@ export function PRCelebration({ prs, onClose }: PRCelebrationProps) {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 relative">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-8 relative">
         <button
           onClick={handleClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
         >
           <X className="w-6 h-6" />
         </button>
@@ -74,10 +74,10 @@ export function PRCelebration({ prs, onClose }: PRCelebrationProps) {
           <div className="w-20 h-20 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
             <Trophy className="w-12 h-12 text-white" />
           </div>
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
             New Personal Record{prs.length > 1 ? 's' : ''}! 🎉
           </h2>
-          <p className="text-gray-600">
+          <p className="text-gray-600 dark:text-gray-400">
             You just crushed {prs.length} PR{prs.length > 1 ? 's' : ''}!
           </p>
         </div>

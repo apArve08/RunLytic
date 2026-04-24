@@ -32,8 +32,8 @@ export function ElevationProfile({ route }: ElevationProfileProps) {
   // Calculate elevation data with proper distance calculation
   const elevationData = route.reduce((acc: Array<{distance: number; elevation: number}>, point, index) => {
     const previousPoint = index > 0 ? route[index - 1] : null
-    
-    const cumulativeDistance = previousPoint 
+
+    const cumulativeDistance = previousPoint
       ? acc[index - 1].distance + getDistance(
           previousPoint.lat,
           previousPoint.lng,
@@ -66,8 +66,8 @@ export function ElevationProfile({ route }: ElevationProfileProps) {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-      <h3 className="text-lg font-semibold text-gray-900 mb-4">Elevation Profile</h3>
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Elevation Profile</h3>
       <ResponsiveContainer width="100%" height={200}>
         <AreaChart data={elevationData}>
           <CartesianGrid strokeDasharray="3 3" />

@@ -17,7 +17,7 @@ export default async function NewRunPage() {
       {/* Back Button */}
       <Link
         href="/runs"
-        className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 transition"
+        className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition"
       >
         <ChevronLeft className="w-4 h-4" />
         Back to runs
@@ -25,12 +25,12 @@ export default async function NewRunPage() {
 
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Log a Run</h1>
-        <p className="text-gray-600 mt-1">Record your running activity</p>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Log a Run</h1>
+        <p className="text-gray-600 dark:text-gray-400 mt-1">Record your running activity</p>
       </div>
 
       {/* Form */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
         <RunForm shoes={shoes || []} />
       </div>
     </div>

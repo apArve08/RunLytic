@@ -48,27 +48,27 @@ export default function MonthlyDashboard() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Monthly Dashboard</h1>
-          <p className="text-gray-600 mt-1">{format(currentMonth, 'MMMM yyyy')}</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Monthly Dashboard</h1>
+          <p className="text-gray-600 dark:text-gray-400 mt-1">{format(currentMonth, 'MMMM yyyy')}</p>
         </div>
 
         {/* Month Navigation */}
         <div className="flex items-center gap-2">
           <button
             onClick={handlePrevMonth}
-            className="p-2 hover:bg-gray-100 rounded-lg transition"
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
           <button
             onClick={handleToday}
-            className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition"
+            className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition"
           >
             Today
           </button>
           <button
             onClick={handleNextMonth}
-            className="p-2 hover:bg-gray-100 rounded-lg transition"
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition"
           >
             <ChevronRight className="w-5 h-5" />
           </button>
@@ -77,26 +77,26 @@ export default function MonthlyDashboard() {
 
       {/* Key Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-          <div className="text-3xl font-bold text-gray-900">{stats?.totalDistance?.toFixed(1) || 0}</div>
-          <div className="text-sm text-gray-500 mt-1">Total km</div>
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
+          <div className="text-3xl font-bold text-gray-900 dark:text-white">{stats?.totalDistance?.toFixed(1) || 0}</div>
+          <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">Total km</div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-          <div className="text-3xl font-bold text-gray-900">{stats?.totalRuns || 0}</div>
-          <div className="text-sm text-gray-500 mt-1">Total Runs</div>
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
+          <div className="text-3xl font-bold text-gray-900 dark:text-white">{stats?.totalRuns || 0}</div>
+          <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">Total Runs</div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-          <div className="text-3xl font-bold text-gray-900">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
+          <div className="text-3xl font-bold text-gray-900 dark:text-white">
             {stats?.avgPace ? formatPace(stats.avgPace) : '--:--'}
           </div>
-          <div className="text-sm text-gray-500 mt-1">Avg Pace /km</div>
+          <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">Avg Pace /km</div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-          <div className="text-3xl font-bold text-gray-900">{stats?.longestRun?.toFixed(1) || 0}</div>
-          <div className="text-sm text-gray-500 mt-1">Longest Run km</div>
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
+          <div className="text-3xl font-bold text-gray-900 dark:text-white">{stats?.longestRun?.toFixed(1) || 0}</div>
+          <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">Longest Run km</div>
         </div>
       </div>
 
@@ -113,18 +113,18 @@ export default function MonthlyDashboard() {
       <MonthlyCalendar runs={stats?.runs || []} month={currentMonth} />
 
       {/* Weekly Breakdown */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Weekly Breakdown</h3>
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Weekly Breakdown</h3>
         <div className="space-y-3">
           {stats?.weeklyData?.map((week: any) => (
-            <div key={week.weekNumber} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+            <div key={week.weekNumber} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
               <div>
-                <div className="font-medium text-gray-900">Week {week.weekNumber}</div>
-                <div className="text-sm text-gray-500">{week.weekStart} - {week.weekEnd}</div>
+                <div className="font-medium text-gray-900 dark:text-white">Week {week.weekNumber}</div>
+                <div className="text-sm text-gray-500 dark:text-gray-400">{week.weekStart} - {week.weekEnd}</div>
               </div>
               <div className="text-right">
-                <div className="font-semibold text-gray-900">{week.distance} km</div>
-                <div className="text-sm text-gray-500">{week.runs} runs</div>
+                <div className="font-semibold text-gray-900 dark:text-white">{week.distance} km</div>
+                <div className="text-sm text-gray-500 dark:text-gray-400">{week.runs} runs</div>
               </div>
             </div>
           ))}
@@ -136,7 +136,7 @@ export default function MonthlyDashboard() {
         <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg border border-blue-200 p-6">
           <div className="flex items-center gap-2 mb-2">
             <TrendingUp className="w-5 h-5 text-blue-600" />
-            <h4 className="font-semibold text-gray-900">Fastest Pace</h4>
+            <h4 className="font-semibold text-gray-900 dark:text-white">Fastest Pace</h4>
           </div>
           <div className="text-2xl font-bold text-blue-700">
             {stats?.fastestPace ? formatPace(stats.fastestPace) : '--:--'} /km
@@ -146,7 +146,7 @@ export default function MonthlyDashboard() {
         <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg border border-green-200 p-6">
           <div className="flex items-center gap-2 mb-2">
             <Zap className="w-5 h-5 text-green-600" />
-            <h4 className="font-semibold text-gray-900">Avg Distance</h4>
+            <h4 className="font-semibold text-gray-900 dark:text-white">Avg Distance</h4>
           </div>
           <div className="text-2xl font-bold text-green-700">
             {stats?.avgDistance?.toFixed(2) || 0} km
@@ -156,7 +156,7 @@ export default function MonthlyDashboard() {
         <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg border border-purple-200 p-6">
           <div className="flex items-center gap-2 mb-2">
             <Award className="w-5 h-5 text-purple-600" />
-            <h4 className="font-semibold text-gray-900">Calories</h4>
+            <h4 className="font-semibold text-gray-900 dark:text-white">Calories</h4>
           </div>
           <div className="text-2xl font-bold text-purple-700">
             {stats?.totalCalories?.toLocaleString() || 0}

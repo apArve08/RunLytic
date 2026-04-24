@@ -19,12 +19,12 @@ export function ScheduleWidget() {
     try {
       const response = await fetch('/api/scheduled-runs?upcoming=true')
       const data = await response.json()
-      
+
       const today = new Date()
       const todayFiltered = data.scheduled_runs?.filter((run: ScheduledRun) =>
         isSameDay(new Date(run.scheduled_date), today)
       ) || []
-      
+
       setTodaysRuns(todayFiltered)
     } catch (error) {
       console.error('Error fetching todays runs:', error)
@@ -41,7 +41,7 @@ export function ScheduleWidget() {
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <Calendar className="w-5 h-5 text-blue-600" />
-          <h3 className="text-lg font-semibold text-gray-900">Today's Workout</h3>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Today's Workout</h3>
         </div>
         <Link
           href="/schedule"
@@ -54,9 +54,9 @@ export function ScheduleWidget() {
 
       <div className="space-y-3">
         {todaysRuns.map((run) => (
-          <div key={run.id} className="bg-white rounded-lg p-4 shadow-sm">
+          <div key={run.id} className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm">
             <div className="flex items-center justify-between mb-2">
-              <span className="font-semibold text-gray-900">{run.run_type}</span>
+              <span className="font-semibold text-gray-900 dark:text-white">{run.run_type}</span>
               {run.target_distance && (
                 <span className="text-blue-600 font-medium">
                   {run.target_distance} km
@@ -64,7 +64,7 @@ export function ScheduleWidget() {
               )}
             </div>
             {run.notes && (
-              <p className="text-sm text-gray-600">{run.notes}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">{run.notes}</p>
             )}
           </div>
         ))}

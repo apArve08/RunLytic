@@ -35,9 +35,9 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Desktop Header */}
-      <header className="hidden md:block bg-white border-b border-gray-200 sticky top-0 z-40">
+      <header className="hidden md:block bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
@@ -45,7 +45,7 @@ export default async function DashboardLayout({
               <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
                 <Footprints className="w-5 h-5 text-white" />
               </div>
-              <span className="text-xl font-bold text-gray-900">RunTrack</span>
+              <span className="text-xl font-bold text-gray-900 dark:text-white">RunTrack</span>
             </Link>
 
             {/* Navigation */}
@@ -53,7 +53,7 @@ export default async function DashboardLayout({
               {/* Dashboard */}
               <Link
                 href="/"
-                className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition"
+                className="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition"
               >
                 <Home className="w-4 h-4" />
                 Dashboard
@@ -62,7 +62,7 @@ export default async function DashboardLayout({
               {/* Runs */}
               <Link
                 href="/runs"
-                className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition"
+                className="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition"
               >
                 <Footprints className="w-4 h-4" />
                 Runs
@@ -70,36 +70,36 @@ export default async function DashboardLayout({
 
               {/* Analytics Dropdown */}
               <div className="relative group">
-                <button className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition">
+                <button className="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">
                   <BarChart3 className="w-4 h-4" />
                   Analytics
                   <ChevronDown className="w-4 h-4" />
                 </button>
-                <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                <div className="absolute top-full left-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
                   <Link
                     href="/progress"
-                    className="flex items-center gap-2 px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition first:rounded-t-lg"
+                    className="flex items-center gap-2 px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-600 dark:hover:text-blue-400 transition first:rounded-t-lg"
                   >
                     <TrendingUp className="w-4 h-4" />
                     Progress Reports
                   </Link>
                   <Link
                     href="/records"
-                    className="flex items-center gap-2 px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition"
+                    className="flex items-center gap-2 px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-600 dark:hover:text-blue-400 transition"
                   >
                     <Trophy className="w-4 h-4" />
                     Personal Records
                   </Link>
                   <Link
                     href="/zones"
-                    className="flex items-center gap-2 px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition"
+                    className="flex items-center gap-2 px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-600 dark:hover:text-blue-400 transition"
                   >
                     <Heart className="w-4 h-4" />
                     Training Zones
                   </Link>
                   <Link
                     href="/weather"
-                    className="flex items-center gap-2 px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition last:rounded-b-lg"
+                    className="flex items-center gap-2 px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-600 dark:hover:text-blue-400 transition last:rounded-b-lg"
                   >
                     <Cloud className="w-4 h-4" />
                     Weather Analysis
@@ -109,29 +109,29 @@ export default async function DashboardLayout({
 
               {/* Training Dropdown */}
               <div className="relative group">
-                <button className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition">
+                <button className="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">
                   <Calendar className="w-4 h-4" />
                   Training
                   <ChevronDown className="w-4 h-4" />
                 </button>
-                <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                <div className="absolute top-full left-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
                   <Link
                     href="/schedule"
-                    className="flex items-center gap-2 px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition first:rounded-t-lg"
+                    className="flex items-center gap-2 px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-600 dark:hover:text-blue-400 transition first:rounded-t-lg"
                   >
                     <Calendar className="w-4 h-4" />
                     Schedule
                   </Link>
                   <Link
                     href="/monthly"
-                    className="flex items-center gap-2 px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition"
+                    className="flex items-center gap-2 px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-600 dark:hover:text-blue-400 transition"
                   >
                     <Award className="w-4 h-4" />
                     Monthly Stats
                   </Link>
                   <Link
                     href="/shoes"
-                    className="flex items-center gap-2 px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition last:rounded-b-lg"
+                    className="flex items-center gap-2 px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-600 dark:hover:text-blue-400 transition last:rounded-b-lg"
                   >
                     <Footprints className="w-4 h-4" />
                     Shoes
@@ -142,7 +142,7 @@ export default async function DashboardLayout({
               {/* Share */}
               <Link
                 href="/stats-widget"
-                className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition"
+                className="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition"
               >
                 <Share2 className="w-4 h-4" />
                 Share
@@ -150,14 +150,14 @@ export default async function DashboardLayout({
 
               {/* Settings Dropdown */}
               <div className="relative group">
-                <button className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition">
+                <button className="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">
                   <Settings className="w-4 h-4" />
                   <ChevronDown className="w-4 h-4" />
                 </button>
-                <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                <div className="absolute top-full right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
                   <Link
                     href="/settings"
-                    className="flex items-center gap-2 px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition first:rounded-t-lg"
+                    className="flex items-center gap-2 px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-600 dark:hover:text-blue-400 transition first:rounded-t-lg"
                   >
                     <Settings className="w-4 h-4" />
                     Settings
@@ -179,13 +179,13 @@ export default async function DashboardLayout({
       </header>
 
       {/* Mobile Header */}
-      <header className="md:hidden bg-white border-b border-gray-200 sticky top-0 z-40">
+      <header className="md:hidden bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-40">
         <div className="px-4 py-3 flex justify-between items-center">
           <Link href="/" className="flex items-center gap-2">
             <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
               <Footprints className="w-5 h-5 text-white" />
             </div>
-            <span className="text-xl font-bold text-gray-900">RunTrack</span>
+            <span className="text-xl font-bold text-gray-900 dark:text-white">RunTrack</span>
           </Link>
           <Link
             href="/runs/new"
@@ -202,11 +202,11 @@ export default async function DashboardLayout({
       </main>
 
       {/* Mobile Bottom Navigation */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-40">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 z-40">
         <div className="grid grid-cols-5 gap-1">
           <Link
             href="/"
-            className="flex flex-col items-center gap-1 px-2 py-3 text-gray-600 hover:text-blue-600 transition"
+            className="flex flex-col items-center gap-1 px-2 py-3 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition"
           >
             <Home className="w-5 h-5" />
             <span className="text-xs">Home</span>
@@ -214,7 +214,7 @@ export default async function DashboardLayout({
 
           <Link
             href="/runs"
-            className="flex flex-col items-center gap-1 px-2 py-3 text-gray-600 hover:text-blue-600 transition"
+            className="flex flex-col items-center gap-1 px-2 py-3 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition"
           >
             <Footprints className="w-5 h-5" />
             <span className="text-xs">Runs</span>
@@ -223,7 +223,7 @@ export default async function DashboardLayout({
           <Link
             href="/schedule"
             className="flex flex-col items-center
-             gap-1 px-2 py-3 text-gray-600 hover:text-blue-600 transition"
+             gap-1 px-2 py-3 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition"
           >
             <Calendar className="w-5 h-5" />
             <span className="text-xs">Schedule</span>
@@ -231,7 +231,7 @@ export default async function DashboardLayout({
 
           <Link
             href="/records"
-            className="flex flex-col items-center gap-1 px-2 py-3 text-gray-600 hover:text-blue-600 transition"
+            className="flex flex-col items-center gap-1 px-2 py-3 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition"
           >
             <Trophy className="w-5 h-5" />
             <span className="text-xs">Records</span>
@@ -239,7 +239,7 @@ export default async function DashboardLayout({
 
           <Link
             href="/settings"
-            className="flex flex-col items-center gap-1 px-2 py-3 text-gray-600 hover:text-blue-600 transition"
+            className="flex flex-col items-center gap-1 px-2 py-3 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition"
           >
             <Settings className="w-5 h-5" />
             <span className="text-xs">More</span>

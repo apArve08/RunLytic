@@ -48,10 +48,10 @@ export function ScheduleGenerator({ onGenerate }: ScheduleGeneratorProps) {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
       <div className="flex items-center gap-2 mb-6">
         <Zap className="w-6 h-6 text-blue-600" />
-        <h2 className="text-xl font-semibold text-gray-900">
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
           AI Schedule Generator
         </h2>
       </div>
@@ -59,14 +59,14 @@ export function ScheduleGenerator({ onGenerate }: ScheduleGeneratorProps) {
       <form onSubmit={handleGenerate} className="space-y-6">
         {/* Goal Type */}
         <div>
-          <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+          <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             <Target className="w-4 h-4" />
             Training Goal
           </label>
           <select
             value={formData.goal_type}
             onChange={(e) => setFormData({ ...formData, goal_type: e.target.value })}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
           >
             <option value="5K">5K Race</option>
             <option value="10K">10K Race</option>
@@ -80,7 +80,7 @@ export function ScheduleGenerator({ onGenerate }: ScheduleGeneratorProps) {
         {/* Weeks & Target Date */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               <Clock className="w-4 h-4" />
               Training Duration (weeks)
             </label>
@@ -92,12 +92,12 @@ export function ScheduleGenerator({ onGenerate }: ScheduleGeneratorProps) {
               onChange={(e) =>
                 setFormData({ ...formData, weeks: parseInt(e.target.value) })
               }
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
             />
           </div>
 
           <div>
-            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               <Calendar className="w-4 h-4" />
               Target Date (optional)
             </label>
@@ -108,7 +108,7 @@ export function ScheduleGenerator({ onGenerate }: ScheduleGeneratorProps) {
                 setFormData({ ...formData, target_date: e.target.value })
               }
               min={format(new Date(), 'yyyy-MM-dd')}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
             />
           </div>
         </div>
@@ -116,7 +116,7 @@ export function ScheduleGenerator({ onGenerate }: ScheduleGeneratorProps) {
         {/* Current Stats */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Current Weekly Distance (km)
             </label>
             <input
@@ -129,12 +129,12 @@ export function ScheduleGenerator({ onGenerate }: ScheduleGeneratorProps) {
                   current_weekly_km: parseFloat(e.target.value),
                 })
               }
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Running Days per Week
             </label>
             <select
@@ -145,7 +145,7 @@ export function ScheduleGenerator({ onGenerate }: ScheduleGeneratorProps) {
                   running_days_per_week: parseInt(e.target.value),
                 })
               }
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
             >
               <option value={3}>3 days</option>
               <option value={4}>4 days</option>
@@ -157,7 +157,7 @@ export function ScheduleGenerator({ onGenerate }: ScheduleGeneratorProps) {
 
         {/* Experience Level */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Experience Level
           </label>
           <div className="grid grid-cols-3 gap-3">
@@ -173,7 +173,7 @@ export function ScheduleGenerator({ onGenerate }: ScheduleGeneratorProps) {
                   ${
                     formData.experience_level === level
                       ? 'border-blue-500 bg-blue-50 text-blue-700'
-                      : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300'
+                      : 'border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-500'
                   }
                 `}
               >

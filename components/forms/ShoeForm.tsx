@@ -3,8 +3,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { FootprintsIcon, Calendar, Drill } from 'lucide-react'
-import { Shoe } from '@/types/database'
+import { Calendar, Drill, DollarSign } from 'lucide-react'
 
 
 export function ShoeForm() {
@@ -17,6 +16,7 @@ export function ShoeForm() {
     model: '',
     nickname: '',
     purchase_date: '',
+    purchase_price: '',
   })
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -33,6 +33,7 @@ export function ShoeForm() {
           model: formData.model,
           nickname: formData.nickname || null,
           purchase_date: formData.purchase_date || null,
+          purchase_price: formData.purchase_price ? parseFloat(formData.purchase_price) : null,
         }),
       })
 
@@ -58,14 +59,14 @@ export function ShoeForm() {
 
       {/* Brand */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
           Brand
         </label>
         <input
           type="text"
           value={formData.brand}
           onChange={(e) => setFormData({ ...formData, brand: e.target.value })}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
           placeholder="Nike, Adidas, Hoka..."
           required
         />
@@ -73,14 +74,14 @@ export function ShoeForm() {
 
       {/* Model */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
           Model
         </label>
         <input
           type="text"
           value={formData.model}
           onChange={(e) => setFormData({ ...formData, model: e.target.value })}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
           placeholder="Pegasus 40, Ultraboost..."
           required
         />
@@ -88,32 +89,48 @@ export function ShoeForm() {
 
       {/* Nickname */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
           Nickname (optional)
         </label>
         <input
           type="text"
           value={formData.nickname}
           onChange={(e) => setFormData({ ...formData, nickname: e.target.value })}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
           placeholder="My racing shoes, Daily trainer..."
         />
       </div>
 
-      {/* Purchase Date */}
-      <div>
-        <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
-          <Calendar className="w-4 h-4" />
-          Purchase Date (optional)
-        </label>
-        <input
-          type="date"
-          value={formData.purchase_date}
-          onChange={(e) =>
-            setFormData({ ...formData, purchase_date: e.target.value })
-          }
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-        />
+      {/* Purchase Date & Price */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <Calendar className="w-4 h-4" />
+            Purchase Date (optional)
+          </label>
+          <input
+            type="date"
+            value={formData.purchase_date}
+            onChange={(e) => setFormData({ ...formData, purchase_date: e.target.value })}
+            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+          />
+        </div>
+
+        <div>
+          <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <DollarSign className="w-4 h-4" />
+            Purchase Price RM (optional)
+          </label>
+          <input
+            type="number"
+            value={formData.purchase_price}
+            onChange={(e) => setFormData({ ...formData, purchase_price: e.target.value })}
+            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
+            placeholder="e.g. 650"
+            min="0"
+            step="0.01"
+          />
+        </div>
       </div>
 
       <button

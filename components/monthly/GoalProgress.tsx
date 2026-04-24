@@ -19,7 +19,7 @@ export function GoalProgress({ currentDistance, currentRuns, goal, month, onGoal
   const [targetRuns, setTargetRuns] = useState(goal?.target_runs?.toString() || '')
   const [saving, setSaving] = useState(false)
 
-  const distanceProgress = goal?.target_distance 
+  const distanceProgress = goal?.target_distance
     ? Math.min((currentDistance / goal.target_distance) * 100, 100)
     : 0
 
@@ -49,11 +49,11 @@ export function GoalProgress({ currentDistance, currentRuns, goal, month, onGoal
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <Target className="w-5 h-5 text-blue-600" />
-          <h3 className="text-lg font-semibold text-gray-900">Monthly Goals</h3>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Monthly Goals</h3>
         </div>
         {!isEditing ? (
           <button
@@ -87,7 +87,7 @@ export function GoalProgress({ currentDistance, currentRuns, goal, month, onGoal
       {isEditing ? (
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Target Distance (km)
             </label>
             <input
@@ -95,19 +95,19 @@ export function GoalProgress({ currentDistance, currentRuns, goal, month, onGoal
               step="0.1"
               value={targetDistance}
               onChange={(e) => setTargetDistance(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
               placeholder="e.g., 100"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Target Runs
             </label>
             <input
               type="number"
               value={targetRuns}
               onChange={(e) => setTargetRuns(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
               placeholder="e.g., 12"
             />
           </div>
@@ -117,18 +117,18 @@ export function GoalProgress({ currentDistance, currentRuns, goal, month, onGoal
           {goal?.target_distance ? (
             <div>
               <div className="flex justify-between text-sm mb-2">
-                <span className="text-gray-600">Distance</span>
-                <span className="font-semibold text-gray-900">
+                <span className="text-gray-600 dark:text-gray-400">Distance</span>
+                <span className="font-semibold text-gray-900 dark:text-white">
                   {currentDistance.toFixed(1)} / {goal.target_distance} km
                 </span>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-3">
+              <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
                 <div
                   className="bg-blue-600 h-3 rounded-full transition-all"
                   style={{ width: `${distanceProgress}%` }}
                 />
               </div>
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                 {distanceProgress >= 100 ? '🎉 Goal achieved!' : `${(100 - distanceProgress).toFixed(0)}% to go`}
               </p>
             </div>
@@ -137,25 +137,25 @@ export function GoalProgress({ currentDistance, currentRuns, goal, month, onGoal
           {goal?.target_runs ? (
             <div>
               <div className="flex justify-between text-sm mb-2">
-                <span className="text-gray-600">Runs</span>
-                <span className="font-semibold text-gray-900">
+                <span className="text-gray-600 dark:text-gray-400">Runs</span>
+                <span className="font-semibold text-gray-900 dark:text-white">
                   {currentRuns} / {goal.target_runs} runs
                 </span>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-3">
+              <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
                 <div
                   className="bg-green-600 h-3 rounded-full transition-all"
                   style={{ width: `${runsProgress}%` }}
                 />
               </div>
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                 {runsProgress >= 100 ? '🎉 Goal achieved!' : `${goal.target_runs - currentRuns} more to go`}
               </p>
             </div>
           ) : null}
 
           {!goal && (
-            <p className="text-gray-500 text-center py-4">
+            <p className="text-gray-500 dark:text-gray-400 text-center py-4">
               No goals set for this month
             </p>
           )}

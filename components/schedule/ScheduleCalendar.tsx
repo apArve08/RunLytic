@@ -51,8 +51,8 @@ export function ScheduleCalendar({
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-      <h3 className="text-lg font-semibold text-gray-900 mb-4">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
         {format(today, 'MMMM yyyy')}
       </h3>
 
@@ -61,7 +61,7 @@ export function ScheduleCalendar({
         {weekDays.map((day) => (
           <div
             key={day}
-            className="text-center text-xs font-medium text-gray-500 py-2"
+            className="text-center text-xs font-medium text-gray-500 dark:text-gray-400 py-2"
           >
             {day}
           </div>
@@ -80,14 +80,14 @@ export function ScheduleCalendar({
               key={day.toISOString()}
               className={`
                 min-h-[100px] p-2 border rounded-lg
-                ${isCurrentMonth ? 'bg-white' : 'bg-gray-50'}
-                ${isToday ? 'ring-2 ring-blue-500' : 'border-gray-200'}
+                ${isCurrentMonth ? 'bg-white dark:bg-gray-800' : 'bg-gray-50 dark:bg-gray-900'}
+                ${isToday ? 'ring-2 ring-blue-500' : 'border-gray-200 dark:border-gray-700'}
               `}
             >
               <div
                 className={`
                 text-sm font-medium mb-2
-                ${isCurrentMonth ? 'text-gray-900' : 'text-gray-400'}
+                ${isCurrentMonth ? 'text-gray-900 dark:text-white' : 'text-gray-400'}
                 ${isToday ? 'text-blue-600 font-bold' : ''}
               `}
               >
@@ -129,8 +129,8 @@ export function ScheduleCalendar({
       </div>
 
       {/* Legend */}
-      <div className="mt-6 pt-6 border-t border-gray-200">
-        <h4 className="text-sm font-medium text-gray-700 mb-3">Run Types</h4>
+      <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+        <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Run Types</h4>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
           {['EASY', 'TEMPO', 'INTERVAL', 'LONG', 'RECOVERY', 'REST'].map(
             (type) => (
@@ -138,7 +138,7 @@ export function ScheduleCalendar({
                 <div
                   className={`w-4 h-4 rounded border ${getRunTypeColor(type)}`}
                 />
-                <span className="text-xs text-gray-600">{type}</span>
+                <span className="text-xs text-gray-600 dark:text-gray-400">{type}</span>
               </div>
             )
           )}
