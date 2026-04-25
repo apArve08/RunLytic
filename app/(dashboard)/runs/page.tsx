@@ -15,7 +15,7 @@ export default async function RunsPage() {
       .order('date', { ascending: false }),
     supabase
       .from('shoes')
-      .select('id, brand, model, nickname')
+      .select('*')
       .order('brand', { ascending: true }),
   ])
 

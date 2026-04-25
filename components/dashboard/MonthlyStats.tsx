@@ -69,11 +69,9 @@ export function MonthlyStats({ runs }: MonthlyStatsProps) {
               border: '1px solid #e5e7eb',
               borderRadius: '8px',
             }}
-            formatter={(value: number, name: string) => {
-              if (name === 'distance') {
-                return [`${value} km`, 'Distance']
-              }
-              return [value, name]
+            formatter={(value) => {
+              if (typeof value === 'number') return [`${value} km`, 'Distance']
+              return [value as string, '']
             }}
           />
           <Bar dataKey="distance" fill="#3b82f6" radius={[8, 8, 0, 0]} />
