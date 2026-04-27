@@ -70,10 +70,16 @@ export async function GET(request: Request) {
     // Fetch activities from Strava
     const { searchParams } = new URL(request.url)
     const page = searchParams.get('page') || '1'
-    const perPage = searchParams.get('per_page') || '30'
+    const perPage = Math.min(parseInt(searchParams.get('per_page') || '30'), 200).toString()
+    const after  = searchParams.get('after')   // unix timestamp
+    const before = searchParams.get('before')  // unix timestamp
+
+    const params = new URLSearchParams({ page, per_page: perPage })
+    if (after)  params.set('after',  after)
+    if (before) params.set('before', before)
 
     const activitiesResponse = await fetch(
-      `https://www.strava.com/api/v3/athlete/activities?page=${page}&per_page=${perPage}`,
+      `https://www.strava.com/api/v3/athlete/activities?${params.toString()}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
