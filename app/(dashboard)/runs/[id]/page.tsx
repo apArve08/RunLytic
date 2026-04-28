@@ -4,12 +4,13 @@
 import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { ChevronLeft, Calendar, Clock, TrendingUp, Footprints, Sparkles, Trash2, RefreshCw, Mountain, Heart, Zap, Map, Activity, TrendingDown } from 'lucide-react'
+import { ChevronLeft, Calendar, Clock, TrendingUp, Footprints, Sparkles, Trash2, RefreshCw, Mountain, Heart, Zap, Map, Activity, TrendingDown, Cloud } from 'lucide-react'
 import { formatPace, formatDuration, formatDistance } from '@/lib/utils'
 import { format } from 'date-fns'
 import { Run } from '@/types/database'
 import { RouteMap } from '@/components/maps/RouteMap'
 import { ElevationProfile } from '@/components/maps/ElevationProfile'
+import { WeatherBadge } from '@/components/weather/WeatherBadge'
 
 export default function RunDetailPage() {
   const params = useParams()
@@ -18,6 +19,9 @@ export default function RunDetailPage() {
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [weatherCity, setWeatherCity] = useState('')
+  const [isFetchingWeather, setIsFetchingWeather] = useState(false)
+  const [weatherError, setWeatherError] = useState('')
 
   useEffect(() => {
     fetchRun()
@@ -65,6 +69,30 @@ export default function RunDetailPage() {
       alert('Failed to analyze run. Please try again.')
     } finally {
       setIsAnalyzing(false)
+    }
+  }
+
+  const handleAddWeather = async () => {
+    if (!run || !weatherCity.trim()) return
+    setIsFetchingWeather(true)
+    setWeatherError('')
+    try {
+      const res = await fetch('/api/weather', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ runId: run.id, city: weatherCity.trim() }),
+      })
+      const data = await res.json()
+      if (res.ok) {
+        setRun({ ...run, weather_data: data.weather })
+        setWeatherCity('')
+      } else {
+        setWeatherError(data.error || 'Could not fetch weather')
+      }
+    } catch {
+      setWeatherError('Network error, please try again')
+    } finally {
+      setIsFetchingWeather(false)
     }
   }
 
@@ -257,6 +285,55 @@ export default function RunDetailPage() {
           <p className="text-gray-700 dark:text-gray-300 whitespace-pre-wrap">{run.notes}</p>
         </div>
       )}
+
+      {/* Weather */}
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+        <div className="flex items-center gap-2 mb-4">
+          <Cloud className="w-5 h-5 text-blue-500" />
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Weather</h2>
+        </div>
+
+        {run.weather_data ? (
+          <div className="space-y-3">
+            <WeatherBadge weather={run.weather_data} />
+            <button
+              onClick={() => setRun({ ...run, weather_data: undefined })}
+              className="text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+            >
+              Remove & re-enter
+            </button>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              No weather data for this run. Enter the city where you ran to fetch current conditions.
+            </p>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={weatherCity}
+                onChange={e => setWeatherCity(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && handleAddWeather()}
+                placeholder="e.g. Kuala Lumpur"
+                className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <button
+                onClick={handleAddWeather}
+                disabled={isFetchingWeather || !weatherCity.trim()}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition flex items-center gap-2"
+              >
+                {isFetchingWeather
+                  ? <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  : <Cloud className="w-4 h-4" />}
+                {isFetchingWeather ? 'Fetching...' : 'Fetch'}
+              </button>
+            </div>
+            {weatherError && (
+              <p className="text-xs text-red-500">{weatherError}</p>
+            )}
+          </div>
+        )}
+      </div>
 
       {/* AI Analysis */}
       {run.ai_analysis ? (

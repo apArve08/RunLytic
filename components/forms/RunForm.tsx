@@ -27,6 +27,7 @@ export function RunForm({ shoes }: RunFormProps) {
     duration: '', // in minutes
     shoes_id: '',
     notes: '',
+    city: '',
     // Advanced fields
     avg_heart_rate: '',
     max_heart_rate: '',
@@ -60,6 +61,7 @@ export function RunForm({ shoes }: RunFormProps) {
           elevation_loss: formData.elevation_loss ? parseFloat(formData.elevation_loss) : null,
           avg_speed: parseFloat(avgSpeed),
           route_data: routeData.length > 0 ? routeData : null,
+          city: formData.city || null,
         }),
       })
 
@@ -183,6 +185,24 @@ export function RunForm({ shoes }: RunFormProps) {
               </option>
             ))}
         </select>
+      </div>
+
+      {/* Location for weather */}
+      <div>
+        <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <MapPin className="w-4 h-4" />
+          Location (optional)
+        </label>
+        <input
+          type="text"
+          value={formData.city}
+          onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
+          placeholder="e.g. Kuala Lumpur"
+        />
+        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+          Used to fetch current weather conditions for this run
+        </p>
       </div>
 
       {/* Advanced Fields Toggle */}

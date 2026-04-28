@@ -15,13 +15,15 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json()
-    const { date, distance, duration, shoes_id, notes, avg_heart_rate, max_heart_rate, elevation_gain, elevation_loss, avg_speed, route_data } = body
+    const { date, distance, duration, shoes_id, notes, avg_heart_rate, max_heart_rate, elevation_gain, elevation_loss, avg_speed, route_data, city } = body
 
-    // Fetch weather if we have route data (first GPS point)
+    // Fetch current weather — by GPS first, then city name, no historical blocking
     let weatherData = null
+    const { fetchWeatherByCoords, fetchWeatherByCity } = await import('@/lib/weather')
     if (route_data && route_data.length > 0) {
-      const { fetchWeather } = await import('@/lib/weather')
-      weatherData = await fetchWeather(route_data[0].lat, route_data[0].lng, date)
+      weatherData = await fetchWeatherByCoords(route_data[0].lat, route_data[0].lng)
+    } else if (city?.trim()) {
+      weatherData = await fetchWeatherByCity(city.trim())
     }
 
     // Insert run

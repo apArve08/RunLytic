@@ -3,7 +3,7 @@
 
 import { useEffect, useState } from 'react'
 import { Run } from '@/types/database'
-import { TrendingDown, TrendingUp } from 'lucide-react'
+import { TrendingDown, TrendingUp, Cloud } from 'lucide-react'
 
 interface WeatherAnalysisProps {
   runs: Run[]
@@ -19,7 +19,7 @@ export function WeatherAnalysis({ runs }: WeatherAnalysisProps) {
   const analyzeWeatherImpact = () => {
     const runsWithWeather = runs.filter(r => r.weather_data)
 
-    if (runsWithWeather.length < 5) {
+    if (runsWithWeather.length < 2) {
       setAnalysis(null)
       return
     }
@@ -61,12 +61,23 @@ export function WeatherAnalysis({ runs }: WeatherAnalysisProps) {
     })
   }
 
-  if (!analysis || analysis.moderate.count === 0) {
+  const runsWithWeather = runs.filter(r => r.weather_data)
+
+  if (!analysis) {
     return (
-      <div className="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg p-6 text-center">
-        <p className="text-gray-600 dark:text-gray-400">
-          Log more runs with GPS data to see weather impact analysis!
+      <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8 text-center space-y-3">
+        <Cloud className="w-10 h-10 text-gray-300 dark:text-gray-600 mx-auto" />
+        <p className="font-medium text-gray-700 dark:text-gray-300">No weather data yet</p>
+        <p className="text-sm text-gray-500 dark:text-gray-400 max-w-sm mx-auto">
+          {runsWithWeather.length === 0
+            ? 'Add weather to your runs — open any run, enter a city in the Weather section, and click Fetch.'
+            : `${runsWithWeather.length} run${runsWithWeather.length === 1 ? '' : 's'} with weather data — need at least 2 to compare conditions.`}
         </p>
+        {runsWithWeather.length === 0 && (
+          <a href="/runs" className="inline-block mt-2 text-sm text-blue-600 hover:text-blue-700 font-medium">
+            Go to my runs →
+          </a>
+        )}
       </div>
     )
   }
