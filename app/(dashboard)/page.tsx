@@ -15,6 +15,7 @@ import { PRCelebration } from '@/components/records/PRCelebration'
 import Link from 'next/link'
 import { Plus, Trophy } from 'lucide-react'
 import { RunningWeatherWidget } from '@/components/dashboard/RunningWeatherWidget'
+import { TrainingFatigueWidget } from '@/components/dashboard/TrainingFatigueWidget'
 
 export default function DashboardPage() {
   const [runs, setRuns] = useState<any[]>([])
@@ -119,12 +120,15 @@ export default function DashboardPage() {
         <AnnualStats />
       ) : (
         <>
-          {/* Weather + Streaks side by side on larger screens */}
+          {/* Weather + Fatigue + Streaks */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             <div className="lg:col-span-1">
               <RunningWeatherWidget />
             </div>
-            <div className="lg:col-span-2">
+            <div className="lg:col-span-1">
+              <TrainingFatigueWidget runs={runs} />
+            </div>
+            <div className="lg:col-span-1">
               <StreakBadge
                 currentStreak={streaks.currentStreak}
                 longestStreak={streaks.longestStreak}

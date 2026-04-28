@@ -9,16 +9,29 @@ import { format } from 'date-fns'
 import { TrendingUp, Calendar, Eye, Trash2, TrendingDown, Minus } from 'lucide-react'
 import { CompareReports } from '@/components/progress/CompareReports'
 import { RacePredictor } from '@/components/race/RacePredictor'
+import { TrainingLoad } from '@/components/progress/TrainingLoad'
 
 export default function ProgressPage() {
   const [pastReports, setPastReports] = useState<ProgressReport[]>([])
   const [selectedReport, setSelectedReport] = useState<ProgressReport | null>(null)
   const [loading, setLoading] = useState(true)
   const [deleting, setDeleting] = useState<string | null>(null)
+  const [runs, setRuns] = useState<{ date: string; distance: number }[]>([])
 
   useEffect(() => {
     fetchPastReports()
+    fetchRuns()
   }, [])
+
+  const fetchRuns = async () => {
+    try {
+      const res = await fetch('/api/runs')
+      const data = await res.json()
+      setRuns((data.runs || []).map((r: any) => ({ date: r.date, distance: r.distance })))
+    } catch {
+      // non-fatal — TrainingLoad handles empty state
+    }
+  }
 
   const fetchPastReports = async () => {
     try {
@@ -80,6 +93,12 @@ export default function ProgressPage() {
       <div>
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Progress Tracking</h1>
         <p className="text-gray-600 dark:text-gray-400 mt-1">AI-powered insights on your running performance</p>
+      </div>
+
+      {/* Training Load & Fatigue */}
+      <div>
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Training Load</h2>
+        <TrainingLoad runs={runs} />
       </div>
 
       {/* Main Analysis */}
