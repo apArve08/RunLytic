@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {
   Home, Footprints, Calendar, TrendingUp, Settings, LogOut,
-  ChevronDown, Trophy, Heart, Cloud, Share2, BarChart3, Award,
+  ChevronDown, Trophy, Heart, Cloud, Share2, BarChart3, Award, Table2,
 } from 'lucide-react'
 
 // ─── helpers ────────────────────────────────────────────────────────────────
@@ -46,7 +46,7 @@ export function Navbar() {
 
   const anyActive = (hrefs: string[]) => hrefs.some(is)
 
-  const analyticsLinks = ['/progress', '/records', '/zones', '/weather']
+  const analyticsLinks = ['/progress', '/records', '/zones', '/weather', '/activities']
   const trainingLinks  = ['/schedule', '/monthly', '/shoes']
 
   // Close other dropdowns when one opens
@@ -108,6 +108,7 @@ export function Navbar() {
                 {analyticsDropdown.open && (
                   <div className="absolute top-full left-0 mt-1 w-52 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 py-1 z-50">
                     {[
+                      { href: '/activities', icon: Table2,     label: 'Activities Table' },
                       { href: '/progress', icon: TrendingUp, label: 'Progress Reports' },
                       { href: '/records',  icon: Trophy,     label: 'Personal Records' },
                       { href: '/zones',    icon: Heart,      label: 'Training Zones' },
